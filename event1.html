@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProMaxz | Event</title>
+    <link rel="icon" href="assets/favicon.png" type="image/png" sizes="32x32">
+    <meta property="og:title" content="THE NEW ERA LIVE | ProMaxz" />
+    <meta property="og:description" content="เตรียมพิกัดรับความมันส์ คอนเสิร์ตเต็มรูปแบบที่จะปลดล็อคทุกโสตประสาท" />
+    <meta property="og:image" content="https://img2.pic.in.th/9B11636A-106E-4C1D-98EC-BD333CC72ACA.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* ================= VARIABLES ================= */
+        :root {
+            --bg-void: #020202;
+            --bg-panel: rgba(10, 10, 10, 0.7);
+            --cyber-red: #FF003C;
+            --cyber-red-dim: rgba(255, 0, 60, 0.2);
+            --text-glow: #ffffff;
+            --text-dim: #888888;
+            --font-main: 'Prompt', sans-serif;
+        }
+
+        /* ================= RESET & BASE ================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-void); 
+            color: var(--text-glow);
+            font-family: var(--font-main); line-height: 1.6; overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #3a0008 0%, var(--bg-void) 60%);
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3, h4 { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        img { max-width: 100%; display: block; object-fit: cover; }
+
+        /* ================= UTILITIES & BUTTONS ================= */
+        .cyber-btn {
+            display: inline-block; padding: 12px 30px; background: var(--cyber-red);
+            color: #fff; font-weight: 700; font-size: 1rem; text-transform: uppercase;
+            letter-spacing: 2px; cursor: pointer; position: relative; border: none;
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            transition: 0.3s;
+        }
+        .cyber-btn:hover { background: #fff; color: var(--cyber-red); box-shadow: 0 0 15px var(--cyber-red); }
+        .cyber-btn-outline {
+            background: rgba(255, 0, 60, 0.1); color: var(--cyber-red); border: 1px solid var(--cyber-red);
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+        }
+        .cyber-btn-outline:hover { background: var(--cyber-red); color: #fff; }
+
+        /* ================= NAVBAR ================= */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 15px 8%;
+            background: rgba(2, 2, 2, 0.85); border-bottom: 1px solid var(--cyber-red);
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; backdrop-filter: blur(8px);
+        }
+        .logo { display: flex; align-items: center; }
+        .logo img { height: 40px; width: auto; filter: drop-shadow(0 0 5px var(--cyber-red)); }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 500; font-size: 0.9rem; letter-spacing: 1.5px; color: var(--text-dim); }
+        .nav-links a:hover { color: var(--cyber-red); text-shadow: 0 0 5px var(--cyber-red); }
+
+        /* ================= ARTICLE SECTION ================= */
+        .article-wrapper {
+            max-width: 900px;
+            margin: 120px auto 50px;
+            padding: 40px;
+            background: var(--bg-panel);
+            border: 1px solid var(--cyber-red-dim);
+            backdrop-filter: blur(5px);
+            position: relative;
+            clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+        }
+
+        .article-wrapper::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 30px; height: 3px; background: var(--cyber-red);
+        }
+
+        .breadcrumb {
+            font-family: monospace; color: var(--cyber-red); font-size: 0.9rem;
+            margin-bottom: 20px; display: flex; gap: 10px; align-items: center;
+        }
+        .breadcrumb a:hover { color: #fff; text-shadow: 0 0 5px var(--cyber-red); }
+
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            line-height: 1.2; margin-bottom: 15px; color: #fff;
+            text-shadow: 0 0 10px rgba(255, 0, 60, 0.5);
+        }
+
+        .article-meta {
+            font-family: monospace; font-size: 0.85rem; color: var(--text-dim);
+            border-bottom: 1px dashed var(--cyber-red-dim); padding-bottom: 20px; margin-bottom: 30px;
+            display: flex; gap: 20px; flex-wrap: wrap;
+        }
+        .article-meta span { color: var(--cyber-red); }
+
+        /* รูปภาพประกอบข่าว/งาน */
+        .article-hero-img {
+            width: 100%; height: auto; max-height: 450px;
+            border: 1px solid var(--cyber-red);
+            margin-bottom: 40px;
+            filter: contrast(1.1); 
+        }
+
+        .article-content {
+            font-size: 1.1rem; color: var(--text-dim); line-height: 1.8;
+        }
+        .article-content p { margin-bottom: 20px; }
+        .article-content strong { color: #fff; font-weight: 700; }
+        .article-content .highlight { color: var(--cyber-red); }
+
+        .article-content blockquote {
+            background: rgba(255, 0, 60, 0.05);
+            border-left: 4px solid var(--cyber-red);
+            padding: 20px; margin: 30px 0;
+            font-family: monospace; font-size: 1rem; color: #fff;
+        }
+
+        .article-footer {
+            margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--cyber-red-dim);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            margin-top: 50px; padding: 60px 8% 30px;
+            background: rgba(2, 2, 2, 0.9); border-top: 2px solid var(--cyber-red);
+            text-align: center; position: relative; z-index: 10;
+        }
+        .f-logo-center { margin-bottom: 40px; display: flex; justify-content: center; }
+        .f-logo-center img { height: 40px; width: auto; filter: drop-shadow(0 0 8px var(--cyber-red)); }
+        .sys-end {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px dashed var(--cyber-red-dim); padding-top: 20px;
+            color: #666; font-family: monospace; font-size: 0.85rem; flex-wrap: wrap; gap: 15px;
+        }
+        .sys-end span.status { color: var(--cyber-red); }
+        .back-top { color: var(--text-dim); cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .back-top:hover { color: var(--cyber-red); text-shadow: 0 0 8px var(--cyber-red); }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 768px) {
+            nav { padding: 15px 5%; flex-direction: column; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            
+            .article-wrapper {
+                margin: 140px 5% 40px; 
+                padding: 25px;
+                clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            }
+            .article-meta { flex-direction: column; gap: 5px; }
+            .article-content { font-size: 1rem; }
+            .article-footer { flex-direction: column; gap: 20px; }
+            
+            .sys-end { flex-direction: column; text-align: center; justify-content: center; }
+        }
+
+        /* ================= 1. VARIABLES & BASE ================= */
+:root {
+    --bg-void: #020202;
+    --bg-panel: rgba(10, 10, 10, 0.7);
+    --cyber-red: #FF003C;
+    --cyber-red-dim: rgba(255, 0, 60, 0.2);
+    --text-glow: #ffffff;
+    --text-dim: #888888;
+    --font-main: 'Prompt', sans-serif;
+}
+
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    background-color: var(--bg-void); 
+    color: var(--text-glow);
+    font-family: var(--font-main); 
+    line-height: 1.6;
+    margin: 0; padding: 0;
+    word-wrap: break-word;
+    word-break: break-word;
+    scroll-behavior: smooth;
+}
+
+/* กล่องหุ้มกันจอล้นในมือถือ */
+.main-container { 
+    overflow-x: hidden; 
+    width: 100%; 
+    position: relative; 
+    min-height: 100vh; 
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+img { max-width: 100%; display: block; object-fit: cover; }
+
+/* ================= 2. PURE CYBERPUNK EFFECTS ================= */
+
+/* [1] Scrollbar สไตล์ไซเบอร์ */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-void); border-left: 1px solid var(--cyber-red-dim); }
+::-webkit-scrollbar-thumb { background: var(--cyber-red); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #fff; box-shadow: 0 0 10px var(--cyber-red); }
+
+/* [2] Text Selection สีแดง */
+::selection { background: var(--cyber-red); color: #fff; text-shadow: none; }
+::-moz-selection { background: var(--cyber-red); color: #fff; text-shadow: none; }
+
+/* [11] พื้นหลังตาราง 3 มิติ (3D Cyber Grid) */
+.main-container::after {
+    content: ''; position: fixed; top: 0; left: -50%; width: 200%; height: 100vh;
+    background-image: 
+        linear-gradient(rgba(255, 0, 60, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 60, 0.15) 1px, transparent 1px);
+    background-size: 50px 50px;
+    transform: perspective(500px) rotateX(60deg);
+    animation: moveGrid 3s linear infinite;
+    z-index: -1; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 60%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 60%);
+}
+@keyframes moveGrid {
+    0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+    100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+}
+
+/* ================= 3. NAVBAR ================= */
+nav {
+    position: fixed; top: 0; width: 100%; padding: 15px 8%;
+    background: rgba(2, 2, 2, 0.85); border-bottom: 1px solid var(--cyber-red);
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 1000; backdrop-filter: blur(8px);
+}
+.logo { display: flex; align-items: center; }
+.logo img { height: 40px; width: auto; filter: drop-shadow(0 0 5px var(--cyber-red)); }
+.nav-links { display: flex; gap: 30px; }
+.nav-links a { font-weight: 500; font-size: 0.9rem; letter-spacing: 1.5px; color: var(--text-dim); }
+.nav-links a:hover { color: var(--cyber-red); text-shadow: 0 0 5px var(--cyber-red); }
+
+/* ================= 4. ARTICLE DETAIL ================= */
+
+/* [7] Breathing Terminal Glow Effect ที่กล่องเนื้อหา */
+.article-wrapper {
+    max-width: 900px; margin: 120px auto 50px; padding: 40px;
+    background: var(--bg-panel); border: 1px solid var(--cyber-red-dim);
+    backdrop-filter: blur(5px); position: relative;
+    clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+    animation: terminal-breathe 4s infinite alternate;
+}
+@keyframes terminal-breathe {
+    0% { box-shadow: 0 0 5px rgba(255, 0, 60, 0.1); border-color: var(--cyber-red-dim); }
+    100% { box-shadow: 0 0 20px rgba(255, 0, 60, 0.3); border-color: rgba(255, 0, 60, 0.8); }
+}
+.article-wrapper::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 30px; height: 3px; background: var(--cyber-red);
+}
+
+/* [14] เอฟเฟกต์พิมพ์ดีด (Typewriter Effect) บน Breadcrumb */
+.breadcrumb {
+    font-family: monospace; color: var(--cyber-red); font-size: 0.9rem;
+    margin-bottom: 20px; display: flex; gap: 10px; align-items: center;
+    overflow: hidden; white-space: nowrap;
+    animation: typingStatus 2s steps(30, end);
+}
+.breadcrumb a:hover { color: #fff; text-shadow: 0 0 5px var(--cyber-red); }
+@keyframes typingStatus { from { max-width: 0; opacity: 0; } to { max-width: 100%; opacity: 1; } }
+
+/* [5] หัวข้อ + Glitch Effect ตอนชี้ */
+.article-title {
+    font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; text-transform: uppercase;
+    line-height: 1.2; margin-bottom: 15px; color: #fff;
+    text-shadow: 0 0 10px rgba(255, 0, 60, 0.5); transition: 0.2s;
+}
+.article-title:hover {
+    animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    text-shadow: -2px 0 var(--cyber-red), 2px 0 #0ff;
+}
+@keyframes glitch-skew {
+    0% { transform: skew(0deg); } 20% { transform: skew(-5deg); } 40% { transform: skew(5deg); }
+    60% { transform: skew(-2deg); } 80% { transform: skew(2deg); } 100% { transform: skew(0deg); }
+}
+
+/* [15] Micro-Glitch Text วันที่และข้อมูลย่อย */
+.article-meta {
+    font-family: monospace; font-size: 0.85rem; color: var(--text-dim);
+    border-bottom: 1px dashed var(--cyber-red-dim); padding-bottom: 20px; margin-bottom: 30px;
+    display: flex; gap: 20px; flex-wrap: wrap;
+}
+.article-meta span { color: var(--cyber-red); transition: 0.2s; }
+.article-meta:hover span { animation: metaGlitch 0.2s linear infinite; }
+@keyframes metaGlitch {
+    0% { opacity: 1; transform: translate(0); color: var(--cyber-red); }
+    20% { opacity: 0.8; transform: translate(-2px, 1px); color: #0ff; }
+    40% { opacity: 1; transform: translate(2px, -1px); color: var(--cyber-red); }
+    60% { opacity: 0.9; transform: translate(-1px, 2px); color: #fff; }
+    80% { opacity: 1; transform: translate(1px, -2px); color: var(--cyber-red); }
+    100% { opacity: 1; transform: translate(0); color: var(--cyber-red); }
+}
+
+/* รูปภาพ */
+.img-container { 
+    position: relative; 
+    overflow: hidden; 
+    margin-bottom: 40px; /* แนะนำให้กำหนดระยะห่างเป็น px เพื่อไม่ให้ชิดเนื้อหาด้านล่างเกินไป */
+    display: flex;             /* เปิดระบบ Flexbox */
+    justify-content: center;   /* จัดให้เนื้อหาด้านใน (รูปภาพ) อยู่กึ่งกลางแนวนอน */
+}
+
+.article-hero-img {
+    width: auto; 
+    height: auto; 
+    max-height: 450px;
+    border: 1px solid var(--cyber-red); 
+    filter: contrast(1.1); 
+    transition: 0.3s;
+    display: block;
+    /* แก้ไขบรรทัดล่างนี้ เพื่อเพิ่มระยะห่างด้านล่าง 40px ครับ */
+    margin: 0 auto 40px auto; 
+}
+
+/* [8] RGB Split Effect บนรูปภาพตอนชี้ */
+.img-container:hover .article-hero-img {
+    animation: rgb-split 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+@keyframes rgb-split {
+    0% { filter: drop-shadow(0 0 0 transparent); }
+    50% { filter: drop-shadow(-5px 0 0 rgba(255,0,60,0.8)) drop-shadow(5px 0 0 rgba(0,255,255,0.8)); transform: translate(2px, -2px); }
+    100% { filter: drop-shadow(0 0 0 transparent); transform: translate(0, 0); }
+}
+
+/* [9] Hologram Scanline บนรูปภาพตอนชี้ */
+.img-container::after {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: rgba(0, 255, 255, 0.8); box-shadow: 0 0 15px rgba(0, 255, 255, 1);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.img-container:hover::after { opacity: 1; animation: scanline-vertical 2s linear infinite; }
+@keyframes scanline-vertical { 0% { top: 0%; } 100% { top: 100%; } }
+
+/* เนื้อหา */
+.article-content { font-size: 1.1rem; color: var(--text-dim); line-height: 1.8; }
+.article-content p { margin-bottom: 20px; }
+.article-content strong { color: #fff; font-weight: 700; }
+.article-content .highlight { color: var(--cyber-red); text-shadow: 0 0 8px var(--cyber-red); }
+
+/* [4] Blockquote + Blinking Cursor Effect */
+.article-content blockquote {
+    background: rgba(255, 0, 60, 0.05); border-left: 4px solid var(--cyber-red);
+    padding: 20px; margin: 30px 0; font-family: monospace; font-size: 1rem; color: #fff;
+}
+.article-content blockquote::after {
+    content: ' _'; display: inline-block; color: var(--cyber-red); font-weight: bold;
+    animation: terminalBlink 1s step-end infinite;
+}
+@keyframes terminalBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+.article-footer {
+    margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--cyber-red-dim);
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+/* ================= 5. BUTTONS ================= */
+.cyber-btn {
+    display: inline-block; padding: 12px 30px; background: var(--cyber-red);
+    color: #fff; font-weight: 700; font-size: 1rem; text-transform: uppercase;
+    letter-spacing: 2px; cursor: pointer; position: relative; border: none;
+    clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+    transition: 0.3s; overflow: hidden; /* จำเป็นสำหรับแสงวิ่ง */
+}
+.cyber-btn:hover { background: #fff; color: var(--cyber-red); box-shadow: 0 0 15px var(--cyber-red); }
+.cyber-btn-outline { background: rgba(255, 0, 60, 0.1); color: var(--cyber-red); border: 1px solid var(--cyber-red); }
+.cyber-btn-outline:hover { background: var(--cyber-red); color: #fff; }
+
+/* [10] แสงสะท้อนวิ่งผ่านปุ่ม (Button Slice Reflection) */
+.cyber-btn::before {
+    content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+    background: rgba(255, 255, 255, 0.4); transform: skewX(-25deg);
+    transition: left 0.5s ease-in-out; pointer-events: none;
+}
+.cyber-btn:hover::before { left: 150%; }
+
+/* ================= 6. FOOTER ================= */
+footer {
+    margin-top: 50px; padding: 60px 8% 30px;
+    background: rgba(2, 2, 2, 0.9); border-top: 2px solid var(--cyber-red);
+    text-align: center; position: relative; z-index: 10;
+}
+.f-logo-center { margin-bottom: 40px; display: flex; justify-content: center; }
+.f-logo-center img { height: 25px; width: auto; filter: drop-shadow(0 0 8px var(--cyber-red)); }
+.sys-end {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px dashed var(--cyber-red-dim); padding-top: 20px;
+    color: #666; font-family: monospace; font-size: 0.85rem; flex-wrap: wrap; gap: 15px;
+}
+.sys-end span.status { color: var(--cyber-red); }
+.back-top { color: var(--text-dim); cursor: pointer; font-weight: bold; transition: 0.3s; }
+.back-top:hover { color: var(--cyber-red); text-shadow: 0 0 8px var(--cyber-red); }
+
+/* ================= 7. MOBILE RESPONSIVE ================= */
+@media (max-width: 768px) {
+    nav { padding: 15px 5%; flex-direction: column; gap: 15px; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .nav-links a { font-size: 0.8rem; }
+    
+    .article-wrapper {
+        margin: 140px 5% 40px;
+        padding: 25px;
+        clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+    }
+    .article-title { font-size: 1.8rem; word-wrap: break-word; display: block; max-width: 100%; }
+    .article-meta { flex-direction: column; gap: 5px; }
+    .article-content { font-size: 1rem; }
+    .article-footer { flex-direction: column; gap: 20px; }
+    
+    .sys-end { flex-direction: column; text-align: center; justify-content: center; }
+}
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <a href="index.html"><img src="assets/main_logo.png" alt="PROMAXz Logo"></a>
+        </div>
+        <div class="nav-links">
+            <a href="index.html#about">CORE</a>
+            <a href="index.html#music">AUDIO</a>
+            <a href="index.html#events">TOUR</a>
+            <a href="index.html#news">LOGS</a>
+            <a href="index.html#chat">CHAT</a>
+        </div>
+    </nav>
+
+    <main class="article-wrapper">
+        
+        <div class="breadcrumb">
+            >> <a href="index.html#events">TARGET_COORDINATES</a> / DEPLOYMENT_DETAILS
+        </div>
+
+        <h1 class="article-title">THE NEW ERA LIVE</h1>
+        <div class="article-meta">
+            <div>EVENT_ID: <span>#EVT-001</span></div>
+            <div>DATE: <span>20 NOV 2026 19:00 THA</span></div>
+            <div>LOCATION: <span>BKK, THAILAND</span></div>
+        </div>
+
+        <img src="https://i.pinimg.com/736x/fe/5d/41/fe5d413e6d30f8c8f2ecbab7335f54ea.jpg" alt="The New Era Live Event" class="article-hero-img">
+
+        <div class="article-content">
+            <p><strong>เตรียมพบกับประสบการณ์ดนตรีที่เหนือขีดจำกัด!</strong> ในงานแสดงสด <strong><span class="highlight">THE NEW ERA LIVE</span></strong> คอนเสิร์ตเต็มรูปแบบที่จะพาทุกคนก้าวข้ามมิติของเสียงเพลง งานนี้เราจัดหนักจัดเต็มด้วยโปรดักชั่นแสงสีเสียงสุดอลังการสไตล์ Cyberpunk พร้อม Setlist ที่รวมทุกเพลงฮิตและเพลงใหม่ที่คุณยังไม่เคยฟังที่ไหนมาก่อน</p>
+
+            <p>หลังจากความสำเร็จของการปล่อยอัลบั้มล่าสุด <span class="highlight">ProMaxz</span> ตัดสินใจปลดล็อคแผนที่พิกัดใหม่ เพื่อนำพาดนตรีไปเผชิญหน้ากับพวกคุณแบบไร้ข้อจำกัด การแสดงครั้งนี้จะไม่ใช่แค่คอนเสิร์ต แต่คือการสร้างปรากฏการณ์ใหม่ในค่ำคืนที่ไม่มีวันลืม</p>
+
+            <!--blockquote>
+                > INTERCEPTED_MESSAGE: <br>
+                "ระบบพร้อม โสตประสาทพร้อม ถึงเวลาปลดล็อคขีดจำกัดแล้วมาร่วมสร้างรหัสลับแห่งเสียงดนตรีไปด้วยกัน เจอผมที่หน้าเวทีครับ" - <span style="color: var(--text-dim);">[ ProMaxz ]</span>
+            </blockquote-->
+            
+            <p>เปิดจำหน่ายบัตรรอบ Early Bird พร้อมสิทธิพิเศษสำหรับผู้ที่เข้าถึงระบบก่อนใคร รับไอเทมสุด Exclusive ประจำทัวร์ที่ไม่มีจำหน่ายที่ไหน เตรียมตัวให้พร้อมและเตรียมร่างกายมาปะทะความมันส์อย่างเต็มพิกัด</p>
+
+            <p>พบกันที่ BKK, THAILAND ในวันที่ <strong>20 พฤศจิกายน 2026</strong></p>
+
+            <p>ระบบกำลังเตรียมการโอนถ่ายข้อมูล... เตรียมรับแรงกระแทก!</p>
+        </div>
+
+        <div class="article-footer">
+            <a href="index.html#events" class="cyber-btn cyber-btn-outline">RETURN TO TOUR</a>
+            <div style="font-family: monospace; color: var(--cyber-red); font-size: 0.85rem;">END_OF_TRANSMISSION.</div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="f-logo-center">
+            <img src="assets/main_logo.png" alt="ProMaxz Logo">
+        </div>
+        <div class="sys-end">
+            <span class="status">[ SYSTEM_STATUS: SECURED ]</span>
+            <span>&copy; 2026 ProMaxz. All Rights Reserved.</span>
+            <a href="#" class="back-top">[ ^ BACK TO TOP ]</a>
+        </div>
+    </footer>
+
+</body>
+</html>
