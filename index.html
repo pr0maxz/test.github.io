@@ -171,24 +171,22 @@ html, body {
 
  /* ================= NEWS / LOGS ================= */
  .log-grid { 
-     display: flex; 
-     flex-wrap: wrap; 
-     gap: 30px; 
-     align-items: flex-start; /* จัดเรียงการ์ดชิดด้านบนเสมอ ไม่ให้แถวยืดตามกัน */
- }
+    column-count: 3;          /* จำนวนคอลัมน์ในจอคอมฯ */
+    column-gap: 30px;         /* ระยะห่างระหว่างคอลัมน์ */
+    width: 100%;
+}
 
- .log-card {
-     background: var(--bg-panel); 
-     border: 1px solid var(--cyber-red); 
-     padding: 20px; 
-     width: calc(33.333% - 20px); /* กำหนดให้แสดงผลแถวละ 3 ใบ (ปรับเปลี่ยนได้ตามความกว้างหน้าจอ) */
-     transition: 0.3s; 
-     backdrop-filter: blur(5px);
-     text-decoration: none; 
-     display: flex; 
-     flex-direction: column;
-     box-sizing: border-box;
- }
+.log-card {
+    display: inline-block;    /* สำคัญมาก: ต้องใช้ inline-block เพื่อให้มันไหลต่อกันได้ */
+    width: 100%;              /* กว้างเต็มคอลัมน์ */
+    margin-bottom: 30px;      /* ระยะห่างด้านล่างของการ์ดแต่ละใบ */
+    background: var(--bg-panel); 
+    border: 1px solid var(--cyber-red); 
+    padding: 20px; 
+    backdrop-filter: blur(5px);
+    vertical-align: top;
+    box-sizing: border-box;
+}
  .log-card:hover { 
      border-color: #fff; 
      box-shadow: 0 10px 20px rgba(255, 0, 60, 0.3); 
