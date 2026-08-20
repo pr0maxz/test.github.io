@@ -717,7 +717,7 @@ html, body {
             const data = await res.json();
             
             if(data && data.length > 0) {
-                container.innerHTML = data.map(news => {
+                container.innerHTML = data.slice(0, 6).map(news => {
                     // เช็คลิงก์ของหน้าข่าว (ถ้าคุณเพิ่มระบบใส่ลิงก์เข้ามาแล้ว)
                     let isValidLink = news.link && news.link.trim() !== '' && news.link.trim() !== '-';
                     
