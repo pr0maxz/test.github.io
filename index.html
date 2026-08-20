@@ -171,21 +171,23 @@ html, body {
 
  /* ================= NEWS / LOGS ================= */
  .log-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
-    gap: 30px; 
-}
+     display: flex; 
+     flex-wrap: wrap; 
+     gap: 30px; 
+     align-items: flex-start; /* จัดเรียงการ์ดชิดด้านบนเสมอ ไม่ให้แถวยืดตามกัน */
+ }
+
  .log-card {
      background: var(--bg-panel); 
      border: 1px solid var(--cyber-red); 
      padding: 20px; 
-     width: 100%; 
+     width: calc(33.333% - 20px); /* กำหนดให้แสดงผลแถวละ 3 ใบ (ปรับเปลี่ยนได้ตามความกว้างหน้าจอ) */
      transition: 0.3s; 
      backdrop-filter: blur(5px);
      text-decoration: none; 
      display: flex; 
      flex-direction: column;
-     height: auto; 
+     box-sizing: border-box;
  }
  .log-card:hover { 
      border-color: #fff; 
