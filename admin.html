@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <title>ProMaxz | CMS Backstage</title>
+ <link rel="icon" href="assets/favicon.png" type="image/png" sizes="32x32">
+ <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+ <style>
+ /* ใช้ตัวแปรสีและธีมเดียวกับเว็บหลัก 100% */
+ :root {
+ --bg-void: #020202; --bg-panel: rgba(10, 10, 10, 0.7);
+ --cyber-red: #FF003C; --cyber-red-dim: rgba(255, 0, 60, 0.2);
+ --text-glow: #ffffff; --text-dim: #888888; --font-main: 'Prompt', sans-serif;
+ }
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+ html, body {
+ background-color: var(--bg-void); color: var(--text-glow);
+ font-family: var(--font-main); line-height: 1.6;
+ background-image: radial-gradient(circle at 50% 0%, #3a0008 0%, var(--bg-void) 60%);
+ background-attachment: fixed;
+ }
+ .sys-header {
+ font-size: 2rem; color: #fff; margin-bottom: 30px;
+ text-shadow: 0 0 10px var(--cyber-red); border-bottom: 1px solid var(--cyber-red-dim);
+ padding-bottom: 10px; display: inline-block;
+ }
+ .sys-header::before { content: '>> '; color: var(--cyber-red); }
+ .cyber-btn {
+ display: inline-block; padding: 10px 20px; background: var(--cyber-red);
+ color: #fff; font-weight: 700; font-size: 0.9rem; text-transform: uppercase;
+ cursor: pointer; border: none;
+ clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+ transition: 0.3s;
+ }
+ .cyber-btn:hover { background: #fff; color: var(--cyber-red); box-shadow: 0 0 15px var(--cyber-red); }
+ .cyber-btn-outline {
+ background: rgba(255, 0, 60, 0.1); color: var(--cyber-red); border: 1px solid var(--cyber-red);
+ }
+ .cyber-btn-outline:hover { background: var(--cyber-red); color: #fff; }
+ 
+ /* สไตล์เฉพาะหน้า Admin */
+ .admin-wrapper { max-width: 900px; margin: 50px auto; padding: 20px; display: none; }
+ .admin-panel {
+ background: var(--bg-panel); border: 1px solid var(--cyber-red);
+ padding: 25px; margin-bottom: 30px; border-radius: 4px; backdrop-filter: blur(5px);
+ }
+ .admin-input {
+ width: 100%; background: #000; border: 1px solid var(--cyber-red-dim);
+ color: #fff; padding: 12px; margin-bottom: 15px; font-family: var(--font-main); outline: none;
+ }
+ .admin-input:focus { border-color: var(--cyber-red); }
+ .flex-row { display: flex; gap: 15px; flex-wrap: wrap; }
+ .flex-row > * { flex: 1; min-width: 200px; }
+
+ /* หน้าจอล็อกอิน */
+ #login-screen {
+ height: 100vh; display: flex; flex-direction: column; 
+ justify-content: center; align-items: center; text-align: center;
+ }
+ </style>
+</head>
+<body>
+
+ <!-- 1. หน้าจอล็อกอิน -->
+ <div id="login-screen">
+    <h2 class="sys-header" style="font-size: 2.5rem;">SYSTEM_OVERRIDE</h2>
+    <p style="color: var(--text-dim); margin-bottom: 20px; letter-spacing: 2px;">ENTER ACCESS CODE</p>
+    
+    <input type="password" id="passCode" class="admin-input" style="max-width: 300px; text-align: center; letter-spacing: 5px;">
+    
+    <!-- เพิ่มจุดโชว์สถานะตรงนี้ -->
+    <div id="authStatus" style="font-family: monospace; font-size: 0.85rem; color: var(--cyber-red); margin: 15px 0; min-height: 20px;"></div>
+    
+    <button id="authBtn" class="cyber-btn" onclick="checkPassword()">AUTHORIZE</button>
+ </div>
+
+ <!-- 2. แผงควบคุม (จะโชว์เมื่อรหัสถูก) -->
+ <div id="admin-dashboard" class="admin-wrapper">
+ <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+ <h1 class="sys-header" style="margin: 0;">CMS_Pr0Maxz</h1>
+ <button class="cyber-btn cyber-btn-outline" onclick="location.reload()" style="border-color: #fff; color: #fff;">LOGOUT</button>
+ </div>
+
+ <!-- จัดการทัวร์ -->
+ <div class="admin-panel">
+ <h3 style="color: var(--cyber-red); margin-bottom: 20px;">[+] TARGET_COORDINATES (TOUR)</h3>
+ <div class="flex-row">
+ <input type="text" id="evDate" class="admin-input" placeholder="DATE (ex. 15 MAR)">
+ <input type="text" id="evTitle" class="admin-input" placeholder="EVENT TITLE" style="flex: 2;">
+ </div>
+ <div class="flex-row">
+ <input type="text" id="evLoc" class="admin-input" placeholder="LOCATION">
+ <input type="text" id="evLink" class="admin-input" placeholder="TICKET LINK (URL)">
+ </div>
+ <button class="cyber-btn cyber-btn-outline" onclick="alert('พร้อมต่อระบบ D1')">DEPLOY EVENT</button>
+ </div>
+
+ <!-- จัดการข่าว -->
+ <div class="admin-panel">
+ <h3 style="color: var(--cyber-red); margin-bottom: 20px;">[+] SYSTEM_LOGS (NEWS)</h3>
+ <div class="flex-row">
+ <input type="text" id="nLogId" class="admin-input" placeholder="LOG_ID (ex. #0002)">
+ <input type="text" id="nTitle" class="admin-input" placeholder="NEWS TITLE" style="flex: 2;">
+ </div>
+ <textarea id="nDesc" class="admin-input" placeholder="SHORT DESCRIPTION" rows="3"></textarea>
+ <input type="text" id="nImg" class="admin-input" placeholder="IMAGE PATH (ex. assets/news2.png)">
+ <button class="cyber-btn cyber-btn-outline" onclick="alert('พร้อมต่อระบบ D1')">PUBLISH LOG</button>
+ </div>
+ </div>
+    <script>
+    let currentAdminPass = "";
+    
+    async function checkPassword() {
+        const pass = document.getElementById('passCode').value;
+        const btn = document.getElementById('authBtn');
+        const statusText = document.getElementById('authStatus');
+
+        if (!pass) return;
+
+        // เปลี่ยนหน้าตาปุ่มตอนกำลังโหลด
+        btn.innerText = "AUTHENTICATING...";
+        btn.disabled = true;
+        statusText.style.color = "#fff";
+        statusText.innerText = "> VERIFYING ENCRYPTION KEY...";
+
+        try {
+            // วิ่งไปถาม API ที่เราเพิ่งสร้าง
+            const response = await fetch('/api/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pass: pass })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // ถ้ารหัสถูก โชว์ไฟเขียว!
+                statusText.style.color = "#0f0"; // สีเขียว
+                statusText.innerText = "> ACCESS GRANTED. WELCOME ADMIN.";
+                currentAdminPass = pass; // จำรหัสไว้ใช้ตอนอัปเดตข้อมูล
+                
+                // หน่วงเวลา 1 วินาทีให้ดูเท่ๆ ก่อนเด้งเข้าหลังบ้าน
+                setTimeout(() => {
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('admin-dashboard').style.display = 'block';
+                }, 1000);
+            } else {
+                // ถ้ารหัสผิด
+                throw new Error("ACCESS DENIED");
+            }
+        } catch (error) {
+            // ดีดกลับพร้อมคำเตือนสีแดง
+            statusText.style.color = "#FF003C";
+            statusText.innerText = "> ERROR: INTRUDER DETECTED. ACCESS DENIED.";
+            document.getElementById('passCode').value = '';
+            btn.innerText = "AUTHORIZE";
+            btn.disabled = false;
+        }
+    }
+    </script>
+    <!-- ========================================= -->
+
+</body>
+</html>
