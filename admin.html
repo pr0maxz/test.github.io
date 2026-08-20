@@ -62,20 +62,14 @@
 </head>
 <body>
 
- <!-- 1. หน้าจอล็อกอิน -->
  <div id="login-screen">
     <h2 class="sys-header" style="font-size: 2.5rem;">SYSTEM_OVERRIDE</h2>
     <p style="color: var(--text-dim); margin-bottom: 20px; letter-spacing: 2px;">ENTER ACCESS CODE</p>
-    
     <input type="password" id="passCode" class="admin-input" style="max-width: 300px; text-align: center; letter-spacing: 5px;">
-    
-    <!-- เพิ่มจุดโชว์สถานะตรงนี้ -->
     <div id="authStatus" style="font-family: monospace; font-size: 0.85rem; color: var(--cyber-red); margin: 15px 0; min-height: 20px;"></div>
-    
     <button id="authBtn" class="cyber-btn" onclick="checkPassword()">AUTHORIZE</button>
  </div>
 
- <!-- 2. แผงควบคุม (จะโชว์เมื่อรหัสถูก) -->
  <div id="admin-dashboard" class="admin-wrapper">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
         <h1 class="sys-header" style="margin: 0;">CMS_NEXUS</h1>
@@ -91,20 +85,16 @@
         </div>
         <div class="flex-row">
             <input type="text" id="evLoc" class="admin-input" placeholder="LOCATION">
-            <input type="text" id="evLink" class="admin-input" placeholder="TICKET LINK (URL)">
+            <input type="text" id="evLink" class="admin-input" placeholder="TICKET LINK (ใส่ - หากไม่มี)">
         </div>
         <div style="display: flex; gap: 15px;">
             <button id="submitEventBtn" class="cyber-btn cyber-btn-outline" onclick="saveTour()">DEPLOY EVENT</button>
             <button id="cancelEditEventBtn" class="cyber-btn cyber-btn-outline" onclick="cancelEditEvent()" style="display:none; border-color: #fff; color: #fff;">CANCEL EDIT</button>
         </div>
-        
-        <!-- รายการทัวร์สำหรับกดแก้ไข/ลบ -->
-        <div id="admin-event-container" style="margin-top: 20px; max-height: 250px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;">
-            > WAITING FOR AUTHORIZATION...
-        </div>
+        <div id="admin-event-container" style="margin-top: 20px; max-height: 250px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;"></div>
     </div>
 
-    <!-- จัดการข่าว -->
+    <!-- จัดการข่าว (เพิ่มช่อง Link แล้ว) -->
     <div class="admin-panel">
         <h3 id="newsFormTitle" style="color: var(--cyber-red); margin-bottom: 20px;">[+] SYSTEM_LOGS (NEWS)</h3>
         <div class="flex-row">
@@ -112,16 +102,15 @@
             <input type="text" id="nTitle" class="admin-input" placeholder="NEWS TITLE" style="flex: 2;">
         </div>
         <textarea id="nDesc" class="admin-input" placeholder="SHORT DESCRIPTION" rows="3"></textarea>
-        <input type="text" id="nImg" class="admin-input" placeholder="IMAGE PATH (ex. assets/news2.png)">
+        <div class="flex-row">
+            <input type="text" id="nImg" class="admin-input" placeholder="IMAGE PATH (ex. assets/news2.png)">
+            <input type="text" id="nLink" class="admin-input" placeholder="LINK (URL หน้าข่าว หรือใส่ - หากไม่มี)">
+        </div>
         <div style="display: flex; gap: 15px;">
             <button id="submitNewsBtn" class="cyber-btn cyber-btn-outline" onclick="saveNews()">PUBLISH LOG</button>
             <button id="cancelEditNewsBtn" class="cyber-btn cyber-btn-outline" onclick="cancelEditNews()" style="display:none; border-color: #fff; color: #fff;">CANCEL EDIT</button>
         </div>
-
-        <!-- รายการข่าวสำหรับกดแก้ไข/ลบ -->
-        <div id="admin-news-container" style="margin-top: 20px; max-height: 250px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;">
-            > WAITING FOR AUTHORIZATION...
-        </div>
+        <div id="admin-news-container" style="margin-top: 20px; max-height: 250px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;"></div>
     </div>
 
     <!-- จัดการแชท -->
@@ -130,9 +119,7 @@
             <h3 style="color: var(--cyber-red); margin: 0;">[+] NEXUS_COMM (CHAT LOGS)</h3>
             <button class="cyber-btn cyber-btn-outline" onclick="loadAdminChat()" style="padding: 5px 15px; font-size: 0.75rem;">REFRESH</button>
         </div>
-        <div id="admin-chat-container" style="max-height: 350px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;">
-            > WAITING FOR AUTHORIZATION...
-        </div>
+        <div id="admin-chat-container" style="max-height: 350px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;"></div>
     </div>
  </div>
 
@@ -166,7 +153,6 @@
                 statusText.innerText = "> ACCESS GRANTED. WELCOME ADMIN.";
                 currentAdminPass = pass; 
                 
-                // โหลดข้อมูลทั้ง 3 ส่วนทันทีที่ล็อกอินผ่าน
                 loadAdminTour();
                 loadAdminNews();
                 loadAdminChat();
@@ -290,6 +276,7 @@
         document.getElementById('nTitle').value = item.title;
         document.getElementById('nDesc').value = item.description;
         document.getElementById('nImg').value = item.img_url;
+        document.getElementById('nLink').value = item.link || '';
         
         currentEditNewsId = id;
         document.getElementById('newsFormTitle').innerText = "[*] EDIT LOG";
@@ -300,7 +287,7 @@
 
     function cancelEditNews() {
         currentEditNewsId = null;
-        ['nLogId', 'nTitle', 'nDesc', 'nImg'].forEach(id => document.getElementById(id).value = '');
+        ['nLogId', 'nTitle', 'nDesc', 'nImg', 'nLink'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('newsFormTitle').innerText = "[+] SYSTEM_LOGS (NEWS)";
         document.getElementById('submitNewsBtn').innerText = "PUBLISH LOG";
         document.getElementById('cancelEditNewsBtn').style.display = "none";
@@ -311,10 +298,11 @@
         const title = document.getElementById('nTitle').value;
         const desc = document.getElementById('nDesc').value;
         const img = document.getElementById('nImg').value;
+        const link = document.getElementById('nLink').value;
         if(!logId || !title) return alert("> ERROR: MISSING LOG ID OR TITLE");
 
         const method = currentEditNewsId ? 'PUT' : 'POST'; 
-        const bodyData = { log_id: logId, title: title, description: desc, img_url: img, adminPass: currentAdminPass };
+        const bodyData = { log_id: logId, title: title, description: desc, img_url: img, link: link, adminPass: currentAdminPass };
         if (currentEditNewsId) bodyData.id = currentEditNewsId;
 
         try {

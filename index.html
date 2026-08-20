@@ -664,6 +664,14 @@ html, body {
             
             if(data && data.length > 0) {
                 container.innerHTML = data.map(event => {
+                    // เช็คว่าลิงก์มีค่าไหม และไม่ใช่เครื่องหมาย - หรือเว้นว่าง
+                    let isValidLink = event.link && event.link.trim() !== '' && event.link.trim() !== '-';
+                    
+                    // ถ้าลิงก์จริงให้โชว์ปุ่ม ACCESS ถ้าไม่มีให้โชว์ปุ่มเทาๆ กดไม่ได้
+                    let linkBtn = isValidLink 
+                        ? `<a href="${event.link}" target="_blank" class="cyber-btn">ACCESS</a>`
+                        : `<button class="cyber-btn" disabled style="opacity: 0.3; cursor: not-allowed; border: 1px solid var(--cyber-red-dim); background: transparent; color: #888;">UNAVAILABLE</button>`;
+
                     return `
                     <div class="coord-item">
                         <div class="c-date">${event.date}</div>
@@ -672,7 +680,7 @@ html, body {
                             <div class="c-loc">${event.location}</div>
                         </div>
                         <div style="display:flex; align-items:center;">
-                            <a href="${event.link || '#'}" target="_blank" class="cyber-btn">ACCESS</a>
+                            ${linkBtn}
                         </div>
                     </div>
                     `;
@@ -696,14 +704,24 @@ html, body {
             
             if(data && data.length > 0) {
                 container.innerHTML = data.map(news => {
+                    // เช็คลิงก์ของหน้าข่าว (ถ้าคุณเพิ่มระบบใส่ลิงก์เข้ามาแล้ว)
+                    let isValidLink = news.link && news.link.trim() !== '' && news.link.trim() !== '-';
+                    
+                    // สลับ Tag ถ้ามีลิงก์ให้เป็น <a> ถาไม่มีให้เป็น <div> ธรรมดา
+                    let tag = isValidLink ? 'a' : 'div';
+                    let hrefAttr = isValidLink ? `href="${news.link}"` : '';
+                    let cursorStyle = isValidLink ? 'cursor: pointer;' : 'cursor: default;';
+                    let readMoreText = isValidLink ? `<span style="color: var(--cyber-red); font-size: 0.85rem; font-weight: bold; margin-top: 15px; display: block;">[ READ MORE >> ]</span>` : '';
+
                     return `
                     <div style="display: flex; flex-direction: column;">
-                        <div class="log-card" style="cursor: default;">
+                        <${tag} ${hrefAttr} class="log-card" style="text-decoration: none; ${cursorStyle}">
                             <img src="${news.img_url}" class="log-img" alt="News Image" onerror="this.src='assets/main_logo.png'">
                             <span class="log-id">LOG_ID: ${news.log_id}</span>
                             <h3 class="log-title">${news.title}</h3>
                             <p class="log-desc">${news.description}</p>
-                        </div>
+                            ${readMoreText}
+                        </${tag}>
                     </div>
                     `;
                 }).join('');
@@ -742,17 +760,16 @@ html, body {
     async function postMsg() {
         const nameInput = document.getElementById('chatName');
         const msgInput = document.getElementById('chatMsg');
-        const adminPassInput = document.getElementById('adminPass'); // ดึงค่ารหัสแอดมินกลับมา
-        const adminPanel = document.getElementById('adminPanel'); // ดึงแผงใส่รหัสแอดมินกลับมา
+        const adminPassInput = document.getElementById('adminPass'); 
+        const adminPanel = document.getElementById('adminPanel'); 
         const postBtn = document.getElementById('postBtn');
 
         const name = nameInput.value.trim();
         const msg = msgInput.value.trim();
-        const pass = adminPassInput ? adminPassInput.value.trim() : ""; // อ่านรหัสผ่าน
+        const pass = adminPassInput ? adminPassInput.value.trim() : ""; 
 
         if(!name || !msg) return alert("> ERROR: FIELDS_REQUIRED");
 
-        // แจ้งเตือนและโชว์ช่องใส่รหัส หากผู้ใช้พยายามตั้งชื่อเป็น ProMaxz
         if (name.toUpperCase() === "PROMAXZ" || name.toUpperCase() === "ADMIN") {
             if (adminPanel && adminPanel.style.display === 'none') {
                 adminPanel.style.display = 'block';
@@ -767,7 +784,6 @@ html, body {
         postBtn.disabled = true;
 
         try {
-            // ส่งค่า adminPass กลับไปด้วย เพื่อให้ระบบหลังบ้านตรวจสอบ
             const response = await fetch(API_URL + '/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -778,9 +794,9 @@ html, body {
             if (result.error) {
                 alert("ACCESS DENIED: " + result.error);
             } else {
-                msgInput.value = ''; // เคลียร์ช่องพิมพ์เมื่อส่งสำเร็จ
-                if(adminPassInput) adminPassInput.value = ''; // เคลียร์รหัสผ่าน
-                if(adminPanel) adminPanel.style.display = 'none'; // ซ่อนช่องใส่รหัสผ่าน
+                msgInput.value = ''; 
+                if(adminPassInput) adminPassInput.value = ''; 
+                if(adminPanel) adminPanel.style.display = 'none'; 
             }
         } catch (error) {
             alert("> ERROR: SYSTEM_ERROR");
@@ -788,17 +804,14 @@ html, body {
         
         postBtn.innerText = "POST";
         postBtn.disabled = false;
-        loadMessages(); // โหลดข้อความใหม่
+        loadMessages(); 
     }
 
-    // ==========================================
-    // เริ่มทำงานเมื่อเปิดหน้าเว็บ
-    // ==========================================
     document.addEventListener("DOMContentLoaded", () => {
         loadTour();
         loadNews();
         loadMessages();
-        setInterval(loadMessages, 5000); // รีเฟรชแชททุก 5 วินาที
+        setInterval(loadMessages, 5000);
     });
 </script>
 </body>
