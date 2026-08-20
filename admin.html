@@ -93,7 +93,7 @@
  <input type="text" id="evLoc" class="admin-input" placeholder="LOCATION">
  <input type="text" id="evLink" class="admin-input" placeholder="TICKET LINK (URL)">
  </div>
- <button class="cyber-btn cyber-btn-outline" onclick="alert('พร้อมต่อระบบ D1')">DEPLOY EVENT</button>
+ <button class="cyber-btn cyber-btn-outline" onclick="addTour()">DEPLOY EVENT</button>
  </div>
 
  <!-- จัดการข่าว -->
@@ -105,8 +105,22 @@
  </div>
  <textarea id="nDesc" class="admin-input" placeholder="SHORT DESCRIPTION" rows="3"></textarea>
  <input type="text" id="nImg" class="admin-input" placeholder="IMAGE PATH (ex. assets/news2.png)">
- <button class="cyber-btn cyber-btn-outline" onclick="alert('พร้อมต่อระบบ D1')">PUBLISH LOG</button>
+ <button class="cyber-btn cyber-btn-outline" onclick="addNews()">PUBLISH LOG</button>
  </div>
+ <!-- ========================================= -->
+ <!-- แผงจัดการห้องแชท (เพิ่มใหม่ตรงนี้) -->
+ <div class="admin-panel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h3 style="color: var(--cyber-red); margin: 0;">[+] NEXUS_COMM (CHAT LOGS)</h3>
+        <button class="cyber-btn cyber-btn-outline" onclick="loadAdminChat()" style="padding: 5px 15px; font-size: 0.75rem;">REFRESH</button>
+    </div>
+    
+    <!-- กล่องแสดงข้อความแชท -->
+    <div id="admin-chat-container" style="max-height: 350px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;">
+        > WAITING FOR AUTHORIZATION...
+    </div>
+ </div>
+ <!-- ========================================= -->
  </div>
     <script>
     let currentAdminPass = "";
@@ -139,6 +153,8 @@
                 statusText.style.color = "#0f0"; // สีเขียว
                 statusText.innerText = "> ACCESS GRANTED. WELCOME ADMIN.";
                 currentAdminPass = pass; // จำรหัสไว้ใช้ตอนอัปเดตข้อมูล
+
+                loadAdminChat();
                 
                 // หน่วงเวลา 1 วินาทีให้ดูเท่ๆ ก่อนเด้งเข้าหลังบ้าน
                 setTimeout(() => {
