@@ -6,7 +6,7 @@ export async function onRequestPost(context) {
 
         // ดึงรหัสผ่านลับสุดยอดที่ตั้งไว้ในระบบ Cloudflare (ดึงจากตัวแปรแวดล้อม)
         // 💡 ชั่วคราว: ถ้ายังไม่ได้ตั้งค่าตัวแปรในระบบ ให้ใช้ 'promaxz2026' ไปก่อนครับ
-        const validPass = context.env.ADMIN_PASS || "promaxz2026"; 
+        const validPass = context.env.ADMIN_PASS || "@dm1n"; 
 
         if (userPass === validPass) {
             // ถ้ารหัสถูก ส่งกุญแจอนุญาตกลับไป (Status 200)

@@ -77,53 +77,71 @@
 
  <!-- 2. แผงควบคุม (จะโชว์เมื่อรหัสถูก) -->
  <div id="admin-dashboard" class="admin-wrapper">
- <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
- <h1 class="sys-header" style="margin: 0;">CMS_Pr0Maxz</h1>
- <button class="cyber-btn cyber-btn-outline" onclick="location.reload()" style="border-color: #fff; color: #fff;">LOGOUT</button>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h1 class="sys-header" style="margin: 0;">CMS_NEXUS</h1>
+        <button class="cyber-btn cyber-btn-outline" onclick="location.reload()" style="border-color: #fff; color: #fff;">LOGOUT</button>
+    </div>
+
+    <!-- จัดการทัวร์ -->
+    <div class="admin-panel">
+        <h3 id="eventFormTitle" style="color: var(--cyber-red); margin-bottom: 20px;">[+] TARGET_COORDINATES (TOUR)</h3>
+        <div class="flex-row">
+            <input type="text" id="evDate" class="admin-input" placeholder="DATE (ex. 15 MAR)">
+            <input type="text" id="evTitle" class="admin-input" placeholder="EVENT TITLE" style="flex: 2;">
+        </div>
+        <div class="flex-row">
+            <input type="text" id="evLoc" class="admin-input" placeholder="LOCATION">
+            <input type="text" id="evLink" class="admin-input" placeholder="TICKET LINK (URL)">
+        </div>
+        <div style="display: flex; gap: 15px;">
+            <button id="submitEventBtn" class="cyber-btn cyber-btn-outline" onclick="saveTour()">DEPLOY EVENT</button>
+            <button id="cancelEditEventBtn" class="cyber-btn cyber-btn-outline" onclick="cancelEditEvent()" style="display:none; border-color: #fff; color: #fff;">CANCEL EDIT</button>
+        </div>
+        
+        <!-- รายการทัวร์สำหรับกดแก้ไข/ลบ -->
+        <div id="admin-event-container" style="margin-top: 20px; max-height: 250px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;">
+            > WAITING FOR AUTHORIZATION...
+        </div>
+    </div>
+
+    <!-- จัดการข่าว -->
+    <div class="admin-panel">
+        <h3 id="newsFormTitle" style="color: var(--cyber-red); margin-bottom: 20px;">[+] SYSTEM_LOGS (NEWS)</h3>
+        <div class="flex-row">
+            <input type="text" id="nLogId" class="admin-input" placeholder="LOG_ID (ex. #0002)">
+            <input type="text" id="nTitle" class="admin-input" placeholder="NEWS TITLE" style="flex: 2;">
+        </div>
+        <textarea id="nDesc" class="admin-input" placeholder="SHORT DESCRIPTION" rows="3"></textarea>
+        <input type="text" id="nImg" class="admin-input" placeholder="IMAGE PATH (ex. assets/news2.png)">
+        <div style="display: flex; gap: 15px;">
+            <button id="submitNewsBtn" class="cyber-btn cyber-btn-outline" onclick="saveNews()">PUBLISH LOG</button>
+            <button id="cancelEditNewsBtn" class="cyber-btn cyber-btn-outline" onclick="cancelEditNews()" style="display:none; border-color: #fff; color: #fff;">CANCEL EDIT</button>
+        </div>
+
+        <!-- รายการข่าวสำหรับกดแก้ไข/ลบ -->
+        <div id="admin-news-container" style="margin-top: 20px; max-height: 250px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;">
+            > WAITING FOR AUTHORIZATION...
+        </div>
+    </div>
+
+    <!-- จัดการแชท -->
+    <div class="admin-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="color: var(--cyber-red); margin: 0;">[+] NEXUS_COMM (CHAT LOGS)</h3>
+            <button class="cyber-btn cyber-btn-outline" onclick="loadAdminChat()" style="padding: 5px 15px; font-size: 0.75rem;">REFRESH</button>
+        </div>
+        <div id="admin-chat-container" style="max-height: 350px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;">
+            > WAITING FOR AUTHORIZATION...
+        </div>
+    </div>
  </div>
 
- <!-- จัดการทัวร์ -->
- <div class="admin-panel">
- <h3 style="color: var(--cyber-red); margin-bottom: 20px;">[+] TARGET_COORDINATES (TOUR)</h3>
- <div class="flex-row">
- <input type="text" id="evDate" class="admin-input" placeholder="DATE (ex. 15 MAR)">
- <input type="text" id="evTitle" class="admin-input" placeholder="EVENT TITLE" style="flex: 2;">
- </div>
- <div class="flex-row">
- <input type="text" id="evLoc" class="admin-input" placeholder="LOCATION">
- <input type="text" id="evLink" class="admin-input" placeholder="TICKET LINK (URL)">
- </div>
- <button class="cyber-btn cyber-btn-outline" onclick="addTour()">DEPLOY EVENT</button>
- </div>
-
- <!-- จัดการข่าว -->
- <div class="admin-panel">
- <h3 style="color: var(--cyber-red); margin-bottom: 20px;">[+] SYSTEM_LOGS (NEWS)</h3>
- <div class="flex-row">
- <input type="text" id="nLogId" class="admin-input" placeholder="LOG_ID (ex. #0002)">
- <input type="text" id="nTitle" class="admin-input" placeholder="NEWS TITLE" style="flex: 2;">
- </div>
- <textarea id="nDesc" class="admin-input" placeholder="SHORT DESCRIPTION" rows="3"></textarea>
- <input type="text" id="nImg" class="admin-input" placeholder="IMAGE PATH (ex. assets/news2.png)">
- <button class="cyber-btn cyber-btn-outline" onclick="addNews()">PUBLISH LOG</button>
- </div>
- <!-- ========================================= -->
- <!-- แผงจัดการห้องแชท (เพิ่มใหม่ตรงนี้) -->
- <div class="admin-panel">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-        <h3 style="color: var(--cyber-red); margin: 0;">[+] NEXUS_COMM (CHAT LOGS)</h3>
-        <button class="cyber-btn cyber-btn-outline" onclick="loadAdminChat()" style="padding: 5px 15px; font-size: 0.75rem;">REFRESH</button>
-    </div>
-    
-    <!-- กล่องแสดงข้อความแชท -->
-    <div id="admin-chat-container" style="max-height: 350px; overflow-y: auto; background: #000; padding: 15px; border: 1px solid var(--cyber-red-dim); font-family: monospace; font-size: 0.9rem; color: #fff;">
-        > WAITING FOR AUTHORIZATION...
-    </div>
- </div>
- <!-- ========================================= -->
- </div>
     <script>
     let currentAdminPass = "";
+    let eventDataList = [];
+    let currentEditEventId = null;
+    let newsDataList = [];
+    let currentEditNewsId = null;
     
     // 1. ระบบเช็ครหัสผ่าน
     async function checkPassword() {
@@ -132,11 +150,8 @@
         const statusText = document.getElementById('authStatus');
 
         if (!pass) return;
-
-        btn.innerText = "AUTHENTICATING...";
-        btn.disabled = true;
-        statusText.style.color = "#fff";
-        statusText.innerText = "> VERIFYING ENCRYPTION KEY...";
+        btn.innerText = "AUTHENTICATING..."; btn.disabled = true;
+        statusText.style.color = "#fff"; statusText.innerText = "> VERIFYING ENCRYPTION KEY...";
 
         try {
             const response = await fetch('/api/auth', {
@@ -144,7 +159,6 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pass: pass })
             });
-
             const result = await response.json();
 
             if (result.success) {
@@ -152,132 +166,215 @@
                 statusText.innerText = "> ACCESS GRANTED. WELCOME ADMIN.";
                 currentAdminPass = pass; 
                 
-                loadAdminChat(); // โหลดแชททันทีที่ล็อกอินผ่าน
+                // โหลดข้อมูลทั้ง 3 ส่วนทันทีที่ล็อกอินผ่าน
+                loadAdminTour();
+                loadAdminNews();
+                loadAdminChat();
                 
                 setTimeout(() => {
                     document.getElementById('login-screen').style.display = 'none';
                     document.getElementById('admin-dashboard').style.display = 'block';
                 }, 1000);
-            } else {
-                throw new Error("ACCESS DENIED");
-            }
+            } else throw new Error("ACCESS DENIED");
         } catch (error) {
-            statusText.style.color = "#FF003C";
-            statusText.innerText = "> ERROR: INTRUDER DETECTED. ACCESS DENIED.";
-            document.getElementById('passCode').value = '';
-            btn.innerText = "AUTHORIZE";
-            btn.disabled = false;
+            statusText.style.color = "#FF003C"; statusText.innerText = "> ERROR: INTRUDER DETECTED. ACCESS DENIED.";
+            document.getElementById('passCode').value = ''; btn.innerText = "AUTHORIZE"; btn.disabled = false;
         }
     }
 
-    // 2. ระบบเพิ่มตารางทัวร์
-    async function addTour() {
+    // ==========================================
+    // ระบบจัดการตารางทัวร์ (EVENTS)
+    // ==========================================
+    async function loadAdminTour() {
+        const container = document.getElementById('admin-event-container');
+        try {
+            const res = await fetch('/api/events');
+            const data = await res.json();
+            if(data && data.length > 0) {
+                eventDataList = data;
+                container.innerHTML = data.map(event => `
+                <div style="margin-bottom: 10px; border-bottom: 1px dashed #333; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                    <div><strong style="color: #FF003C;">${event.date}</strong> | ${event.title} (${event.location})</div>
+                    <div>
+                        <button onclick="editAdminEvent(${event.id})" style="background: #333; color: #fff; border: 1px solid #555; padding: 5px 10px; margin-right: 5px; cursor: pointer; font-family: monospace;">EDIT</button>
+                        <button onclick="deleteAdminEvent(${event.id})" style="background: #8b0000; color: #fff; border: 1px solid #FF003C; padding: 5px 10px; cursor: pointer; font-family: monospace;">DEL</button>
+                    </div>
+                </div>`).join('');
+            } else container.innerHTML = "> NO EVENTS FOUND.";
+        } catch(e) { container.innerHTML = "> ERROR: DATABANK OFFLINE"; }
+    }
+
+    function editAdminEvent(id) {
+        const item = eventDataList.find(e => e.id === id);
+        if(!item) return;
+        document.getElementById('evDate').value = item.date;
+        document.getElementById('evTitle').value = item.title;
+        document.getElementById('evLoc').value = item.location;
+        document.getElementById('evLink').value = item.link || '';
+        
+        currentEditEventId = id;
+        document.getElementById('eventFormTitle').innerText = "[*] EDIT EVENT";
+        document.getElementById('submitEventBtn').innerText = "UPDATE EVENT";
+        document.getElementById('cancelEditEventBtn').style.display = "inline-block";
+        document.getElementById('eventFormTitle').scrollIntoView({behavior: "smooth"});
+    }
+
+    function cancelEditEvent() {
+        currentEditEventId = null;
+        ['evDate', 'evTitle', 'evLoc', 'evLink'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('eventFormTitle').innerText = "[+] TARGET_COORDINATES (TOUR)";
+        document.getElementById('submitEventBtn').innerText = "DEPLOY EVENT";
+        document.getElementById('cancelEditEventBtn').style.display = "none";
+    }
+
+    async function saveTour() {
         const date = document.getElementById('evDate').value;
         const title = document.getElementById('evTitle').value;
         const loc = document.getElementById('evLoc').value;
         const link = document.getElementById('evLink').value;
-
         if(!date || !title || !loc) return alert("> ERROR: MISSING CRITICAL DATA");
+
+        const method = currentEditEventId ? 'PUT' : 'POST'; 
+        const bodyData = { date, title, location: loc, link, adminPass: currentAdminPass };
+        if (currentEditEventId) bodyData.id = currentEditEventId;
 
         try {
             const res = await fetch('/api/events', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ date: date, title: title, location: loc, link: link, adminPass: currentAdminPass })
+                method: method, headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bodyData)
             });
             const result = await res.json();
-            
             if(result.error) alert("> ERROR: " + result.error);
-            else {
-                alert("> SUCCESS: อัปเดตคิวงานขึ้นหน้าเว็บเรียบร้อย!");
-                document.getElementById('evDate').value = '';
-                document.getElementById('evTitle').value = '';
-                document.getElementById('evLoc').value = '';
-                document.getElementById('evLink').value = '';
-            }
-        } catch (e) {
-            alert("> ERROR: SYSTEM_ERROR");
-        }
+            else { cancelEditEvent(); loadAdminTour(); }
+        } catch (e) { alert("> ERROR: SYSTEM_ERROR"); }
     }
 
-    // 3. ระบบเพิ่มข่าวสาร
-    async function addNews() {
+    async function deleteAdminEvent(id) {
+        if (!confirm("> WARNING: CONFIRM DELETE THIS EVENT?")) return;
+        try {
+            const res = await fetch('/api/events', {
+                method: 'DELETE', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, adminPass: currentAdminPass })
+            });
+            const result = await res.json();
+            if (result.error) alert("> ERROR: " + result.error); else loadAdminTour();
+        } catch (e) { alert("> ERROR: SYSTEM_ERROR"); }
+    }
+
+    // ==========================================
+    // ระบบจัดการข่าวสาร (NEWS)
+    // ==========================================
+    async function loadAdminNews() {
+        const container = document.getElementById('admin-news-container');
+        try {
+            const res = await fetch('/api/news');
+            const data = await res.json();
+            if(data && data.length > 0) {
+                newsDataList = data;
+                container.innerHTML = data.map(news => `
+                <div style="margin-bottom: 10px; border-bottom: 1px dashed #333; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                    <div><strong style="color: #FF003C;">${news.log_id}</strong> | ${news.title}</div>
+                    <div>
+                        <button onclick="editAdminNews(${news.id})" style="background: #333; color: #fff; border: 1px solid #555; padding: 5px 10px; margin-right: 5px; cursor: pointer; font-family: monospace;">EDIT</button>
+                        <button onclick="deleteAdminNews(${news.id})" style="background: #8b0000; color: #fff; border: 1px solid #FF003C; padding: 5px 10px; cursor: pointer; font-family: monospace;">DEL</button>
+                    </div>
+                </div>`).join('');
+            } else container.innerHTML = "> NO LOGS FOUND.";
+        } catch(e) { container.innerHTML = "> ERROR: DATABANK OFFLINE"; }
+    }
+
+    function editAdminNews(id) {
+        const item = newsDataList.find(n => n.id === id);
+        if(!item) return;
+        document.getElementById('nLogId').value = item.log_id;
+        document.getElementById('nTitle').value = item.title;
+        document.getElementById('nDesc').value = item.description;
+        document.getElementById('nImg').value = item.img_url;
+        
+        currentEditNewsId = id;
+        document.getElementById('newsFormTitle').innerText = "[*] EDIT LOG";
+        document.getElementById('submitNewsBtn').innerText = "UPDATE LOG";
+        document.getElementById('cancelEditNewsBtn').style.display = "inline-block";
+        document.getElementById('newsFormTitle').scrollIntoView({behavior: "smooth"});
+    }
+
+    function cancelEditNews() {
+        currentEditNewsId = null;
+        ['nLogId', 'nTitle', 'nDesc', 'nImg'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('newsFormTitle').innerText = "[+] SYSTEM_LOGS (NEWS)";
+        document.getElementById('submitNewsBtn').innerText = "PUBLISH LOG";
+        document.getElementById('cancelEditNewsBtn').style.display = "none";
+    }
+
+    async function saveNews() {
         const logId = document.getElementById('nLogId').value;
         const title = document.getElementById('nTitle').value;
         const desc = document.getElementById('nDesc').value;
         const img = document.getElementById('nImg').value;
-
         if(!logId || !title) return alert("> ERROR: MISSING LOG ID OR TITLE");
+
+        const method = currentEditNewsId ? 'PUT' : 'POST'; 
+        const bodyData = { log_id: logId, title: title, description: desc, img_url: img, adminPass: currentAdminPass };
+        if (currentEditNewsId) bodyData.id = currentEditNewsId;
 
         try {
             const res = await fetch('/api/news', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ log_id: logId, title: title, description: desc, img_url: img, adminPass: currentAdminPass })
+                method: method, headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bodyData)
             });
             const result = await res.json();
-            
             if(result.error) alert("> ERROR: " + result.error);
-            else {
-                alert("> SUCCESS: เผยแพร่ข่าวสารเรียบร้อย!");
-                document.getElementById('nLogId').value = '';
-                document.getElementById('nTitle').value = '';
-                document.getElementById('nDesc').value = '';
-                document.getElementById('nImg').value = '';
-            }
-        } catch (e) {
-            alert("> ERROR: SYSTEM_ERROR");
-        }
+            else { cancelEditNews(); loadAdminNews(); }
+        } catch (e) { alert("> ERROR: SYSTEM_ERROR"); }
     }
 
-    // 4. ระบบจัดการแชท
+    async function deleteAdminNews(id) {
+        if (!confirm("> WARNING: CONFIRM DELETE THIS LOG?")) return;
+        try {
+            const res = await fetch('/api/news', {
+                method: 'DELETE', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, adminPass: currentAdminPass })
+            });
+            const result = await res.json();
+            if (result.error) alert("> ERROR: " + result.error); else loadAdminNews();
+        } catch (e) { alert("> ERROR: SYSTEM_ERROR"); }
+    }
+
+    // ==========================================
+    // ระบบจัดการแชท (CHAT)
+    // ==========================================
     async function loadAdminChat() {
         const container = document.getElementById('admin-chat-container');
-        container.innerHTML = "> FETCHING CHAT LOGS...";
         try {
             const res = await fetch('/api/chat');
             const data = await res.json();
-            
             if (data && data.length > 0) {
                 container.innerHTML = data.map(msg => {
                     const date = new Date(msg.timestamp);
                     const timeStr = date.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-                    
                     return `
                     <div style="margin-bottom: 10px; border-bottom: 1px dashed #333; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
                         <div style="flex: 1; padding-right: 15px; word-break: break-word;">
                             <span style="color:#888; font-size: 0.75rem;">[${timeStr}]</span> 
-                            <strong style="color: #FF003C;">${msg.name}:</strong> 
-                            <span>${msg.message}</span>
+                            <strong style="color: #FF003C;">${msg.name}:</strong> <span>${msg.message}</span>
                         </div>
-                        <button onclick="deleteAdminMsg(${msg.id})" style="background: #8b0000; color: #fff; border: 1px solid #FF003C; padding: 5px 10px; cursor: pointer; font-weight: bold; font-family: monospace; transition: 0.3s;" onmouseover="this.style.background='#FF003C'" onmouseout="this.style.background='#8b0000'">DEL</button>
-                    </div>
-                    `;
+                        <button onclick="deleteAdminMsg(${msg.id})" style="background: #8b0000; color: #fff; border: 1px solid #FF003C; padding: 5px 10px; cursor: pointer; font-family: monospace;">DEL</button>
+                    </div>`;
                 }).join('');
-            } else {
-                container.innerHTML = "> NO MESSAGES FOUND IN DATABANK.";
-            }
-        } catch (e) {
-            container.innerHTML = "> ERROR: DATABANK OFFLINE";
-        }
+            } else container.innerHTML = "> NO MESSAGES FOUND IN DATABANK.";
+        } catch (e) { container.innerHTML = "> ERROR: DATABANK OFFLINE"; }
     }
 
     async function deleteAdminMsg(id) {
         if (!confirm("> WARNING: CONFIRM DELETE THIS MESSAGE?")) return;
-        
         try {
             const res = await fetch('/api/chat', {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
+                method: 'DELETE', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: id, adminPass: currentAdminPass })
             });
             const result = await res.json();
-            
-            if (result.error) alert("> ERROR: " + result.error);
-            else loadAdminChat();
-        } catch (e) {
-            alert("> ERROR: SYSTEM_ERROR");
-        }
+            if (result.error) alert("> ERROR: " + result.error); else loadAdminChat();
+        } catch (e) { alert("> ERROR: SYSTEM_ERROR"); }
     }
     </script>
 </body>
