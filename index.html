@@ -416,7 +416,17 @@ html, body {
  .hero-text-side { display: flex; flex-direction: column; align-items: center; }
  .sys-status { justify-content: center; }
  .hero-banner-side { width: 100%; justify-content: center; }
- }
+ /* ================= ขยายกรอบแชทให้กว้างและยาวลงข้างล่าง ================= */
+     #chat.section-wrapper { padding-left: 3%; padding-right: 3%; }
+     .chat-container { 
+         padding: 15px 10px !important; 
+         height: 650px !important; /* เพิ่มความสูงรวมของกล่องแชทให้ยาวลงมา */
+     }
+     #chatBox { 
+         height: 450px !important; /* เพิ่มพื้นที่แสดงข้อความให้ยาวขึ้น */
+         overflow-y: auto !important; 
+     } 
+
  
  </style>
 </head>
