@@ -222,6 +222,7 @@ html, body {
      line-height: 1.5; 
      flex-grow: 1;
  }
+
  /* ================= CHAT SECTION ================= */
  .chat-container {
  width: 100%; max-width: 1000px; height: auto; min-height: 400px;
@@ -616,6 +617,12 @@ html, body {
  <div class="chat-container" style="padding: 20px;">
  <!-- ส่วนพิมพ์ข้อความ -->
  <div class="input-area" style="border-bottom: 2px solid #FF003C; padding-bottom: 20px; margin-bottom: 20px;">
+ 
+ <!-- ช่องใส่รหัสสำหรับ Admin (เอากลับมาแล้ว) -->
+ <div id="adminPanel" style="display:none; margin-bottom:10px;">
+    <input type="password" id="adminPass" placeholder="ENTER_ACCESS_CODE" style="width:100%; background:#000; border:1px solid #FF003C; color:#FF003C; padding:8px; font-family: 'Prompt', sans-serif;">
+ </div>
+ 
  <input type="text" id="chatName" placeholder="NAME" style="width:100%; background:#000; border:1px solid #FF003C; color:#fff; padding:8px; margin-bottom:10px; font-family: 'Prompt', sans-serif;">
  <textarea id="chatMsg" placeholder="MESSAGE" style="width:100%; height:100px; background:#000; border:1px solid #FF003C; color:#fff; padding:10px; resize:none; box-sizing:border-box; outline:none; font-family: 'Prompt', sans-serif;"></textarea>
  
@@ -735,26 +742,36 @@ html, body {
     async function postMsg() {
         const nameInput = document.getElementById('chatName');
         const msgInput = document.getElementById('chatMsg');
+        const adminPassInput = document.getElementById('adminPass'); // ดึงค่ารหัสแอดมินกลับมา
+        const adminPanel = document.getElementById('adminPanel'); // ดึงแผงใส่รหัสแอดมินกลับมา
         const postBtn = document.getElementById('postBtn');
 
         const name = nameInput.value.trim();
         const msg = msgInput.value.trim();
+        const pass = adminPassInput ? adminPassInput.value.trim() : ""; // อ่านรหัสผ่าน
 
         if(!name || !msg) return alert("> ERROR: FIELDS_REQUIRED");
 
-        // แจ้งเตือนหากผู้ใช้พยายามตั้งชื่อเป็นแอดมิน
+        // แจ้งเตือนและโชว์ช่องใส่รหัส หากผู้ใช้พยายามตั้งชื่อเป็น ProMaxz
         if (name.toUpperCase() === "PROMAXZ" || name.toUpperCase() === "ADMIN") {
-            return alert("> ERROR: SYSTEM_OVERRIDE_DENIED (ไม่อนุญาตให้ใช้ชื่อนี้ครับ)");
+            if (adminPanel && adminPanel.style.display === 'none') {
+                adminPanel.style.display = 'block';
+                return alert("กรุณาระบุรหัสยืนยันตัวตน " + name);
+            }
+            if (!pass) {
+                return alert("กรุณาใส่รหัสผ่านก่อนโพสต์ครับ");
+            }
         }
 
         postBtn.innerText = "UPLOADING...";
         postBtn.disabled = true;
 
         try {
+            // ส่งค่า adminPass กลับไปด้วย เพื่อให้ระบบหลังบ้านตรวจสอบ
             const response = await fetch(API_URL + '/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: name, message: msg }) // ส่งข้อมูลแบบธรรมดา ไม่มี adminPass แล้ว
+                body: JSON.stringify({ name: name, message: msg, adminPass: pass }) 
             });
             const result = await response.json();
             
@@ -762,6 +779,8 @@ html, body {
                 alert("ACCESS DENIED: " + result.error);
             } else {
                 msgInput.value = ''; // เคลียร์ช่องพิมพ์เมื่อส่งสำเร็จ
+                if(adminPassInput) adminPassInput.value = ''; // เคลียร์รหัสผ่าน
+                if(adminPanel) adminPanel.style.display = 'none'; // ซ่อนช่องใส่รหัสผ่าน
             }
         } catch (error) {
             alert("> ERROR: SYSTEM_ERROR");
