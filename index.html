@@ -93,7 +93,7 @@ html, body {
  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
  
 .hero-title {
- font-size: clamp(3.5rem, 8vw, 7rem); line-height: 1; margin-bottom: 20px;
+ font-size: clamp(2.5rem, 5vw, 5rem); line-height: 1; margin-bottom: 20px;
  text-shadow: 0 0 20px rgba(255,0,60,0.5);
  }
  .hero-desc {
@@ -109,8 +109,8 @@ html, body {
  backdrop-filter: blur(5px);
  }
  .terminal-box::before {
- content: 'TERMINAL_OVERRIDE_ACTIVE'; position: absolute; top: -10px; left: 20px;
- background: var(--bg-void); padding: 0 10px; color: var(--cyber-red); font-size: 0.8rem; font-weight: bold;
+ content: '>>คำสั่งเทอร์มินัลกำลังทำงาน'; position: absolute; top: -10px; left: 20px;
+ background: var(--bg-void); padding: 0 10px; color: var(--cyber-red); font-size: 1rem; font-weight: regular; font-family: var(--font-main);
  }
  .terminal-text { color: var(--text-dim); font-size: 1.1rem; line-height: 1.8; font-family: var(--font-main); }
  .terminal-text strong { color: #fff; text-shadow: 0 0 5px var(--text-glow); }
@@ -397,7 +397,7 @@ html, body {
  .sys-header { font-size: 1.5rem; display: block; max-width: 100%; }
  .sys-status { flex-wrap: wrap; line-height: 1.4; letter-spacing: 1px; font-size: 0.8rem;}
  .terminal-box { padding: 20px 15px; }
- .terminal-box::before { font-size: 0.65rem; top: -8px; left: 10px; max-width: 90%; }
+ .terminal-box::before { font-size: 1rem; top: -8px; left: 10px; max-width: 90%; }
  .music-grid, .log-grid { grid-template-columns: 1fr; }
  .sys-end { flex-direction: column; text-align: center; justify-content: center; }
  .chat-container { height: 450px; }
@@ -409,6 +409,7 @@ html, body {
  .sys-status { justify-content: center; }
  .hero-banner-side { width: 100%; justify-content: center; }
  }
+ 
  </style>
 </head>
 <body>
@@ -420,29 +421,30 @@ html, body {
  <a href="index.html"><img src="assets/main_logo.png" alt="ProMaxz Logo"></a>
  </div>
  <div class="nav-links">
- <a href="#about">CORE</a>
- <a href="#music">AUDIO</a>
- <a href="#events">TOUR</a>
- <a href="#news">LOGS</a>
- <a href="#chat">CHAT</a>
+ <a href="#about">แนะนำ</a>
+ <a href="#music">เพลง</a>
+ <a href="#events">ทัวร์</a>
+ <a href="#news">ข่าว</a>
+ <a href="#chat">แชท</a>
  </div>
  </nav>
 
  <header id="hero">
  <div class="hero-content-wrapper">
  <div class="hero-text-side">
- <div class="sys-status">CONNECTION ESTABLISHED // SYSTEM ONLINE</div>
- <h1 class="hero-title">THE NEW<br><span class="text-red">ERA</span> BEGins</h1>
- <p class="hero-desc">STREAM THE NEW ALBUM NOW</p>
+ <div class="sys-status">สร้างการเชื่อมต่อแล้ว // ระบบพร้อมใช้งาน</div>
+ <h1 class="hero-title" style="line-height: 1.3;">โลกใบใหม่<br><span class="text-red">PROMAXZ</span><br>เริ่มต้นขึ้น
+</h1>
+ <p class="hero-desc">กำลังออนไลน์</p>
  <div style="display: flex; gap: 15px; flex-wrap: wrap;">
- <a href="#music" class="cyber-btn">Audio</a>
- <a href="#events" class="cyber-btn cyber-btn-outline">ACCESS_EVENTS</a>
+ <a href="#music" class="cyber-btn">ฟังเพลง</a>
+ <a href="#events" class="cyber-btn cyber-btn-outline">ตารางทัวร์</a>
  </div>
  </div>
  <div class="hero-banner-side">
  <div class="banner-frame hud-corners">
  <div class="corners-inner">
- <img src="assets/slideshow-1.jpg" alt="Hero Banner">
+ <img src="assets/slideshow-1.jpg" alt="Hero Banner" style="cursor: pointer;" onclick="openModal(this.src)">
  </div>
  </div>
  </div>
@@ -454,11 +456,11 @@ html, body {
  <div class="about-grid">
  <div class="terminal-box">
  <p class="terminal-text">
- > EXECUTING SCAN...<br>
- > MATCH FOUND: <strong>PRODUCER</strong><br><br>
+ > กำลังเรียกใช้งานการสแกน ...<br>
+ > ตำแหน่งที่ค้นพบ: <strong>PRODUCER</strong><br><br>
  โปรดิวเซอร์และมือเบสผู้หลงใหลในดนตรีทุกแนวเพลง เขาเริ่มต้นเส้นทางดนตรีจากการสร้างสรรค์ผลงานในห้องนอน สู่การร่วมงานกับศิลปินมากมาย ทำให้ผลงานของเขามีพลังและน่าจดจำ <span class="highlight">ด้วยซาวด์เบสที่เป็นเอกลักษณ์และการเรียบเรียงดนตรีที่หนักแน่น</span>
- ทำให้ผลงานของเขามีพลังและน่าจดจำ และพร้อมที่จะก้าวเข้าสู่การปฏิวัติทางเสียง.<br><br>
- > STATUS: <span class="highlight">READY FOR DEPLOYMENT</span>
+ ทำให้ผลงานของเขามีพลังและน่าจดจำ และพร้อมที่จะก้าวเข้าสู่การปฏิวัติทางเสียง<br><br>
+ > สถานะ: <span class="highlight">พร้อมส่งมอบระบบ</span>
  </p>
  </div>
  <div>
@@ -472,11 +474,11 @@ html, body {
  <div class="about-grid">
  <div class="terminal-box">
  <p class="terminal-text">
- > EXECUTING SCAN...<br>
- > MATCH FOUND: <strong>ARTIST</strong><br><br>
+ > กำลังเรียกใช้งานการสแกน ...<br>
+ > ตำแหน่งที่ค้นพบ: <strong>ARTIST</strong><br><br>
  ศิลปินหน้าใหม่ที่มาพร้อมเสียงร้องใสๆ และแนวเพลงน่ารักสดชื่น เขาเริ่มต้นจากการแต่งเพลงเอง ก่อนจะกลายเป็นแรงบันดาลใจให้คนฟังด้วยท่วงทำนองอบอุ่นและเนื้อเพลงที่ชวนยิ้ม ทุกบทเพลงของเขาคือความสุขเล็กๆ ที่ฟังแล้วหัวใจเต้นตาม <span class="highlight">ทุกบทเพลงของเขาคือความสุขเล็กๆ</span>
  ฟังแล้วหัวใจเต้นตาม<br><br>
- > STATUS: <span class="highlight">READY FOR DEPLOYMENT</span>
+ > สถานะ: <span class="highlight">พร้อมส่งมอบระบบ</span>
  </p>
  </div>
  <div>
@@ -486,7 +488,7 @@ html, body {
  </section>
 
  <section id="music" class="section-wrapper">
- <h2 class="sys-header">AUDIO_DATABANK</h2>
+ <h2 class="sys-header">ฟังเพลง</h2>
  <div class="music-grid">
  
  <div class="data-card">
@@ -597,23 +599,23 @@ html, body {
  </section>
 
  <section id="events" class="section-wrapper">
-    <h2 class="sys-header">TARGET_COORDINATES</h2>
+    <h2 class="sys-header">ตารางทัวร์</h2>
     <div class="coord-list" id="event-container">
         <div style="color: var(--cyber-red); font-family: monospace; text-align: center; padding: 30px;">
-            > FETCHING COORDINATES...
+            > กำลังค้นหาข้อมูล กรุณารอสักครู่...
         </div>
     </div>
  </section>
 
  <section id="news" class="section-wrapper">
-    <h2 class="sys-header">SYSTEM_LOGS</h2>
+    <h2 class="sys-header">ข่าวสาร</h2>
     <div class="log-grid" id="news-container">
-        <div style="color: var(--cyber-red); font-family: monospace;">> FETCHING LOGS...</div>
+        <div style="color: var(--cyber-red); font-family: monospace;">> กำลังโหลดข่าว กรุณารอสักครู่...</div>
     </div>
 </section>
 
  <section id="chat" class="section-wrapper">
- <h2 class="sys-header">NEXUS_COMM</h2>
+ <h2 class="sys-header">ห้องแชท</h2>
  <div class="chat-container" style="padding: 20px;">
  <!-- ส่วนพิมพ์ข้อความ -->
  <div class="input-area" style="border-bottom: 2px solid #FF003C; padding-bottom: 20px; margin-bottom: 20px;">
@@ -632,7 +634,7 @@ html, body {
 
  <!-- ส่วนแสดงผลข้อความ -->
  <div id="chatBox" style="padding:15px; overflow-y:visible; height:auto; font-family:'Prompt', sans-serif; color:#fff;">
- > INITIALIZING CLOUDFLARE NEXUS...
+ > กำลังแสดงผล กรุณารอสักครู่...
  </div>
  </div>
  </section>
@@ -642,14 +644,18 @@ html, body {
  <img src="assets/main_logo.png" alt="ProMaxz Logo">
  </div>
  <div class="sys-end">
- <span class="status">[ SYSTEM_STATUS: SECURED ]</span>
+ <span class="status">[ สถานะระบบ: ปลอดภัย ]</span>
  <span>&copy; 2026 ProMaxz. All Rights Reserved.</span>
- <a href="#hero" class="back-top">[ ^ BACK TO TOP ]</a>
+ <a href="#hero" class="back-top">[ ^ กลับไปด้านบน ]</a>
  </div>
  </footer>
 
 </div>
-
+<!-- Lightbox Modal สำหรับขยายภาพ (คลิกพื้นที่ว่างเพื่อปิด) -->
+<div id="imageModal" onclick="closeModal()" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; backdrop-filter: blur(5px); cursor:pointer;">
+    <!-- ใส่ onclick="event.stopPropagation()" เพื่อป้องกันไม่ให้คลิกโดนรูปแล้วรูปปิดตาม -->
+    <img id="modalImg" onclick="event.stopPropagation()" style="max-width:90%; max-height:85vh; border:2px solid var(--cyber-red); box-shadow:0 0 30px var(--cyber-red); cursor:default;">
+</div>
 <script>
     const API_URL = '/api'; 
 
@@ -812,6 +818,23 @@ html, body {
         loadNews();
         loadMessages();
         setInterval(loadMessages, 5000);
+    });
+    // เปิด Modal แสดงรูปใหญ่
+    function openModal(imgSrc) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        modal.style.display = 'flex';
+        modalImg.src = imgSrc;
+    }
+
+    // ปิด Modal
+    function closeModal() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
+
+    // กดปุ่ม Esc บนคีย์บอร์ดเพื่อปิดภาพได้ด้วย
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
     });
 </script>
 </body>
