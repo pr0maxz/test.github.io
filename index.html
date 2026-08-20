@@ -386,26 +386,30 @@ html, body {
 
  /* ================= RESPONSIVE ================= */
  @media (max-width: 1200px) {
- .music-grid, .log-grid { grid-template-columns: repeat(2, 1fr); }
- .about-grid { grid-template-columns: 1fr; }
- .coord-item { flex-direction: column; align-items: flex-start; gap: 15px; }
- .c-date { width: auto; }
- .cyber-btn { align-self: flex-start; }
+     .music-grid { grid-template-columns: repeat(2, 1fr); }
+     .log-grid { column-count: 2; }
+     .about-grid { grid-template-columns: 1fr; }
+     .coord-item { flex-direction: column; align-items: flex-start; gap: 15px; }
+     .c-date { width: auto; }
+     .cyber-btn { align-self: flex-start; }
  }
 
  @media (max-width: 768px) {
- nav { padding: 15px 5%; flex-direction: column; gap: 15px; }
- .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
- .section-wrapper { padding: 80px 5% 40px; }
- .hero-title { font-size: 2.2rem; }
- .sys-header { font-size: 1.5rem; display: block; max-width: 100%; }
- .sys-status { flex-wrap: wrap; line-height: 1.4; letter-spacing: 1px; font-size: 0.8rem;}
- .terminal-box { padding: 20px 15px; }
- .terminal-box::before { font-size: 1rem; top: -8px; left: 10px; max-width: 90%; }
- .music-grid, .log-grid { grid-template-columns: 1fr; }
- .sys-end { flex-direction: column; text-align: center; justify-content: center; }
- .chat-container { height: 450px; }
- #chatBox { height: 300px !important; overflow-y: auto !important; }
+     nav { padding: 15px 5%; flex-direction: column; gap: 15px; }
+     .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
+     .section-wrapper { padding: 80px 5% 40px; }
+     .hero-title { font-size: 2.2rem; }
+     .sys-header { font-size: 1.5rem; display: block; max-width: 100%; }
+     .sys-status { flex-wrap: wrap; line-height: 1.4; letter-spacing: 1px; font-size: 0.8rem;}
+     .terminal-box { padding: 20px 15px; }
+     .terminal-box::before { font-size: 1rem; top: -8px; left: 10px; max-width: 90%; }
+     .music-grid { grid-template-columns: 1fr; }
+     .log-grid { column-count: 1; }
+     .sys-end { flex-direction: column; text-align: center; justify-content: center; }
+     .chat-container { height: 450px; }
+     #chatBox { height: 300px !important; overflow-y: auto !important; } 
+ }
+ 
  
  #hero { height: auto; min-height: 100vh; padding-top: 120px; padding-bottom: 50px; }
  .hero-content-wrapper { flex-direction: column; text-align: center; gap: 50px; }
