@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="th">
 <head>
  <meta charset="UTF-8">
@@ -6,434 +6,11 @@
  <title>ProMaxz | Home</title>
  <link rel="icon" href="assets/favicon.png" type="image/png" sizes="32x32">
  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700;900&display=swap" rel="stylesheet">
- <style>
- /* ================= VARIABLES ================= */
- :root {
- --bg-void: #020202;
- --bg-panel: rgba(10, 10, 10, 0.7);
- --cyber-red: #FF003C;
- --cyber-red-dim: rgba(255, 0, 60, 0.2);
- --text-glow: #ffffff;
- --text-dim: #888888;
- --font-main: 'Prompt', sans-serif;
- }
- .text-red { color: var(--cyber-red); text-shadow: 0 0 10px var(--cyber-red); }
- 
-/* ================= RESET & BASE ================= */
- * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
- 
-html, body {
- background-color: var(--bg-void); 
- color: var(--text-glow);
- font-family: var(--font-main); line-height: 1.6;
- background-image: radial-gradient(circle at 50% 0%, #3a0008 0%, var(--bg-void) 60%);
- background-attachment: fixed;
- word-wrap: break-word;
- word-break: break-word;
- }
-
- .main-container { overflow-x: hidden; width: 100%; position: relative; }
- h1, h2, h3, h4 { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
- a { text-decoration: none; color: inherit; transition: 0.3s; }
- img { max-width: 100%; display: block; object-fit: cover; }
-
- /* ================= UTILITIES & BUTTONS ================= */
- .cyber-btn {
- display: inline-block; padding: 12px 30px; background: var(--cyber-red);
- color: #fff; font-weight: 700; font-size: 1rem; text-transform: uppercase;
- letter-spacing: 2px; cursor: pointer; position: relative; border: none;
- clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
- transition: 0.3s;
- }
- .cyber-btn:disabled { opacity: 0.5; cursor: not-allowed; } 
- .cyber-btn:hover:not(:disabled) { background: #fff; color: var(--cyber-red); box-shadow: 0 0 15px var(--cyber-red); }
- 
-.cyber-btn-outline {
- background: rgba(255, 0, 60, 0.1); color: var(--cyber-red); border: 1px solid var(--cyber-red);
- clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
- }
- .cyber-btn-outline:hover { background: var(--cyber-red); color: #fff; }
-
- .section-wrapper { padding: 100px 8% 50px; position: relative; z-index: 10; width: 100%; }
- 
-.sys-header {
- font-size: 2.5rem; color: #fff; margin-bottom: 50px;
- text-shadow: 0 0 10px var(--cyber-red); border-bottom: 1px solid var(--cyber-red-dim);
- padding-bottom: 10px; display: inline-block;
- }
- .sys-header::before { content: '>> '; color: var(--cyber-red); }
-
- /* ================= NAVBAR ================= */
- nav {
- position: fixed; top: 0; width: 100%; padding: 15px 8%;
- background: rgba(2, 2, 2, 0.85); border-bottom: 1px solid var(--cyber-red);
- display: flex; justify-content: space-between; align-items: center;
- z-index: 1000; backdrop-filter: blur(8px);
- }
- .logo { display: flex; align-items: center; }
- .logo img { height: 40px; width: auto; filter: drop-shadow(0 0 5px var(--cyber-red)); }
- .nav-links { display: flex; gap: 30px; }
- .nav-links a { font-weight: 500; font-size: 0.9rem; letter-spacing: 1.5px; color: var(--text-dim); }
- .nav-links a:hover { color: var(--cyber-red); text-shadow: 0 0 5px var(--cyber-red); }
-
- /* ================= HERO ================= */
- #hero {
- height: 100vh; display: flex; flex-direction: column; justify-content: center;
- padding: 0 8%; position: relative; z-index: 10;
- }
- .sys-status {
- color: var(--cyber-red); font-size: 0.9rem; font-weight: 700; letter-spacing: 4px;
- margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
- }
- .sys-status::before {
- content: ''; width: 10px; height: 10px; background: var(--cyber-red);
- border-radius: 50%; box-shadow: 0 0 10px var(--cyber-red);
- animation: blink 1s infinite;
- }
- @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
- 
-.hero-title {
- font-size: clamp(2.5rem, 5vw, 5rem); line-height: 1; margin-bottom: 20px;
- text-shadow: 0 0 20px rgba(255,0,60,0.5);
- }
- .hero-desc {
- color: var(--text-dim); max-width: 600px; margin-bottom: 40px;
- font-size: 1.1rem; border-left: 2px solid var(--cyber-red); padding-left: 15px;
- }
-
- /* ================= ABOUT ================= */
- .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
- .terminal-box {
- background: var(--bg-panel); border: 1px solid var(--cyber-red);
- padding: 30px; position: relative; font-family: monospace;
- backdrop-filter: blur(5px);
- }
- .terminal-box::before {
- content: '>>คำสั่งเทอร์มินัลกำลังทำงาน'; position: absolute; top: -10px; left: 20px;
- background: var(--bg-void); padding: 0 10px; color: var(--cyber-red); font-size: 1rem; font-weight: regular; font-family: var(--font-main);
- }
- .terminal-text { color: var(--text-dim); font-size: 1.1rem; line-height: 1.8; font-family: var(--font-main); }
- .terminal-text strong { color: #fff; text-shadow: 0 0 5px var(--text-glow); }
- .terminal-text .highlight { color: var(--cyber-red); }
- 
-.about-img {
- width: 100%; max-width: 400px; height: auto;
- display: block; margin: 0 auto; padding: 5px; 
- background: var(--cyber-red-dim); border: 2px solid var(--bg-void); 
- outline: 2px solid var(--cyber-red); outline-offset: -4px; 
- clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
- transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
- }
- .about-img:hover {
- transform: translateY(-5px) scale(1.03);
- outline-color: #fff; box-shadow: 0 10px 20px -10px var(--cyber-red);
- }
-
- /* ================= MUSIC ================= */
- .music-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
- .data-card {
- background: var(--bg-panel); border: 1px solid var(--cyber-red-dim);
- padding: 15px; position: relative; transition: 0.3s;
- clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
- backdrop-filter: blur(5px);
- }
- .data-card:hover { border-color: var(--cyber-red); box-shadow: 0 0 15px var(--cyber-red-dim); transform: translateY(-5px); }
- .data-img-wrap { position: relative; margin-bottom: 15px; overflow: hidden; }
- .data-img-wrap img { width: 100%; height: auto; aspect-ratio: 1/1; filter: contrast(1.2) sepia(0.3) hue-rotate(-20deg); transition: 0.5s; }
- .data-card:hover .data-img-wrap img { transform: scale(1.05); filter: none; }
- 
-.data-overlay {
- position: absolute; top: 0; left: 0; right: 0; bottom: 0;
- width: 100%; height: 100%; background: rgba(255,0,60,0.2); 
- opacity: 0; transition: 0.3s; backdrop-filter: blur(2px);
- }
- .data-overlay .cyber-btn {
- position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0;
- }
- .data-card:hover .data-overlay { opacity: 1; }
- .data-info h3 { font-size: 1.1rem; color: #fff; margin-bottom: 5px; } 
- .data-meta { color: var(--cyber-red); font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-
- /* ================= EVENTS ================= */
- .coord-list { display: flex; flex-direction: column; gap: 15px; }
- .coord-item {
- display: flex; justify-content: space-between; align-items: center;
- background: var(--bg-panel); border-left: 3px solid var(--cyber-red);
- padding: 20px 30px; transition: 0.3s; backdrop-filter: blur(5px);
- font-family: var(--font-main);
- }
- .coord-item:hover { background: rgba(255,0,60,0.2); box-shadow: inset 0 0 10px rgba(255,0,60,0.2); }
- .c-date { font-size: 1.5rem; font-weight: 900; color: var(--cyber-red); width: 120px; font-family: var(--font-main); }
- .c-details { flex: 1; }
- .c-title { font-size: 1.2rem; color: #fff; margin-bottom: 5px; font-weight: 900; font-family: var(--font-main); }
- .c-loc { color: var(--text-dim); font-size: 0.9rem; font-family: var(--font-main); }
- .c-status { font-family: monospace; color: var(--text-dim); }
-
- /* ================= NEWS / LOGS ================= */
- .log-grid { 
-    column-count: 3;          /* จำนวนคอลัมน์ในจอคอมฯ */
-    column-gap: 30px;         /* ระยะห่างระหว่างคอลัมน์ */
-    width: 100%;
-}
-
-.log-card {
-    display: inline-block;    /* สำคัญมาก: ต้องใช้ inline-block เพื่อให้มันไหลต่อกันได้ */
-    width: 100%;              /* กว้างเต็มคอลัมน์ */
-    margin-bottom: 30px;      /* ระยะห่างด้านล่างของการ์ดแต่ละใบ */
-    background: var(--bg-panel); 
-    border: 1px solid var(--cyber-red); 
-    padding: 20px; 
-    backdrop-filter: blur(5px);
-    vertical-align: top;
-    box-sizing: border-box;
-    break-inside: avoid; 
-    page-break-inside: avoid;
-}
- .log-card:hover { 
-     border-color: #fff; 
-     box-shadow: 0 10px 20px rgba(255, 0, 60, 0.3); 
-     transform: translateY(-5px); 
- }
- .log-img { 
-    width: auto;
-    height: auto; 
-    max-height: auto;
-    object-fit: contain; 
-    margin: 0 auto 20px auto;
-    display: block;
-    border: 1px solid rgba(255, 0, 60, 0.2); 
-}
- .log-id { 
-     font-family: monospace; 
-     color: var(--cyber-red); 
-     font-size: 0.85rem; 
-     margin-bottom: 8px; 
-     display: block; 
-     font-weight: bold;
- }
- .log-title { 
-     font-size: 1.5rem;
-     margin-bottom: 12px; 
-     color: #fff; 
-     line-height: 1.3; 
-     font-weight: 900;
- } 
- .log-desc { 
-     color: var(--text-dim); 
-     font-size: 0.95rem; 
-     line-height: 1.5; 
-     flex-grow: 1;
-     word-break: normal;
-     overflow-wrap: break-word;
- }
-
- /* ================= CHAT SECTION ================= */
- .chat-container {
- width: 100%; max-width: 1000px; height: auto; min-height: 400px;
- margin: 0 auto; background: var(--bg-panel); border: 1px solid var(--cyber-red);
- display: flex; flex-direction: column; backdrop-filter: blur(5px); 
- position: relative; padding-bottom: 20px;
- }
- .chat-header {
- background: rgba(255, 0, 60, 0.1); border-bottom: 1px solid var(--cyber-red-dim);
- padding: 10px 20px; font-family: monospace; color: var(--cyber-red);
- font-size: 0.85rem; display: flex; justify-content: space-between; font-weight: bold;
- }
- 
- #chatBox > div:nth-child(odd) { background: rgba(255, 255, 255, 0.03); padding: 10px; border-radius: 4px; }
- #chatBox > div:nth-child(even) { background: transparent; padding: 10px; border-radius: 4px; }
-
- /* ================= FOOTER ================= */
- footer {
- margin-top: 50px; padding: 60px 8% 30px;
- background: rgba(2, 2, 2, 0.9); border-top: 2px solid var(--cyber-red);
- text-align: center; position: relative; z-index: 10;
- }
- .f-logo-center { margin-bottom: 40px; display: flex; justify-content: center; }
- .f-logo-center img { height: 25px; width: auto; filter: drop-shadow(0 0 8px var(--cyber-red)); }
- .sys-end {
- display: flex; justify-content: space-between; align-items: center;
- border-top: 1px dashed var(--cyber-red-dim); padding-top: 20px;
- color: #666; font-family: monospace; font-size: 0.85rem; flex-wrap: wrap; gap: 15px;
- }
- .sys-end span.status { color: var(--cyber-red); }
- .back-top { color: var(--text-dim); cursor: pointer; font-weight: bold; transition: 0.3s; }
- .back-top:hover { color: var(--cyber-red); text-shadow: 0 0 8px var(--cyber-red); }
-
- /* ================= ANIMATIONS & EFFECTS ================= */
- ::-webkit-scrollbar { width: 8px; }
- ::-webkit-scrollbar-track { background: var(--bg-void); border-left: 1px solid var(--cyber-red-dim); }
- ::-webkit-scrollbar-thumb { background: var(--cyber-red); border-radius: 4px; }
- ::-webkit-scrollbar-thumb:hover { background: #fff; box-shadow: 0 0 10px var(--cyber-red); }
-
- ::selection { background: var(--cyber-red); color: #fff; text-shadow: none; }
- ::-moz-selection { background: var(--cyber-red); color: #fff; text-shadow: none; }
-
- .coord-item { position: relative; overflow: hidden; }
- .coord-item::before {
- content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
- background: linear-gradient(90deg, transparent, rgba(255, 0, 60, 0.4), transparent);
- transform: skewX(-20deg); transition: 0.5s; z-index: 1; pointer-events: none;
- }
- .coord-item:hover::before { left: 150%; transition: 0.7s ease-in-out; }
-
- .terminal-text::after {
- content: ' _'; display: inline-block; color: var(--cyber-red); font-weight: bold;
- animation: terminalBlink 1s step-end infinite;
- }
- @keyframes terminalBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
- .sys-header { transition: 0.2s; }
- .sys-header:hover {
- animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
- color: #fff; text-shadow: -2px 0 var(--cyber-red), 2px 0 #0ff;
- }
- @keyframes glitch-skew {
- 0% { transform: skew(0deg); }
- 20% { transform: skew(-5deg); }
- 40% { transform: skew(5deg); }
- 60% { transform: skew(-2deg); }
- 80% { transform: skew(2deg); }
- 100% { transform: skew(0deg); }
- }
-
- .hero-title .text-red { animation: neon-flicker 4s infinite alternate; }
- @keyframes neon-flicker {
- 0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { text-shadow: 0 0 5px var(--cyber-red), 0 0 10px var(--cyber-red), 0 0 20px var(--cyber-red); opacity: 1; }
- 20%, 24%, 55% { text-shadow: none; opacity: 0.5; }
- }
-
- .data-card:hover .data-img-wrap img, .log-card:hover .log-img {
- animation: rgb-split 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
- }
- @keyframes rgb-split {
- 0% { filter: drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent); }
- 50% { filter: drop-shadow(-5px 0 0 rgba(255,0,60,0.8)) drop-shadow(5px 0 0 rgba(0,255,255,0.8)); transform: scale(1.05) translate(2px, -2px); }
- 100% { filter: drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent); transform: scale(1.05) translate(0, 0); }
- }
-
- .data-img-wrap::after {
- content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
- background: rgba(255, 0, 0, 0.8); box-shadow: 0 0 10px rgb(255, 0, 0);
- opacity: 0; pointer-events: none; transition: opacity 0.3s;
- }
- .data-card:hover .data-img-wrap::after { opacity: 1; animation: scanline-vertical 1.5s linear infinite; }
- @keyframes scanline-vertical { 0% { top: 0%; } 100% { top: 100%; } }
-
- .cyber-btn { overflow: hidden; } 
- .cyber-btn::before {
- content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
- background: rgba(255, 255, 255, 0.3); transform: skewX(-25deg); transition: left 0.5s ease-in-out; pointer-events: none; 
- }
- .cyber-btn:hover::before { left: 150%; }
-
- #hero { position: relative; overflow: hidden; }
- #hero::after {
- content: ''; position: absolute; bottom: 0; left: -50%; width: 200%; height: 60%;
- background-image: linear-gradient(rgba(255, 0, 60, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 0, 60, 0.3) 1px, transparent 1px);
- background-size: 40px 40px; transform: perspective(500px) rotateX(60deg); animation: moveGrid 2s linear infinite; 
- z-index: -1; pointer-events: none; -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), transparent); mask-image: linear-gradient(to top, rgba(0,0,0,1), transparent);
- }
- @keyframes moveGrid { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(40px); } }
-
- .data-card, .log-card { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s; transform-style: preserve-3d; }
- .data-card:hover, .log-card:hover { transform: translateY(-10px) scale(1.02) perspective(1000px) rotateX(2deg) rotateY(-2deg); box-shadow: -5px 15px 25px rgba(255, 0, 60, 0.2); z-index: 2; }
-
- .data-img-wrap::before {
- content: ''; position: absolute; top: 15px; left: 15px; right: 15px; bottom: 15px; border: 2px solid transparent;
- background: linear-gradient(to right, #fff 2px, transparent 2px) 0 0, linear-gradient(to right, #fff 2px, transparent 2px) 0 100%, linear-gradient(to left, #fff 2px, transparent 2px) 100% 0, linear-gradient(to left, #fff 2px, transparent 2px) 100% 100%, linear-gradient(to bottom, #fff 2px, transparent 2px) 0 0, linear-gradient(to bottom, #fff 2px, transparent 2px) 100% 0, linear-gradient(to top, #fff 2px, transparent 2px) 0 100%, linear-gradient(to top, #fff 2px, transparent 2px) 100% 100%;
- background-repeat: no-repeat; background-size: 20px 20px; opacity: 0; transform: scale(1.2); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 5; pointer-events: none;
- }
- .data-card:hover .data-img-wrap::before { opacity: 1; transform: scale(1); }
-
- .sys-status { display: inline-flex; overflow: hidden; white-space: nowrap; animation: typingStatus 2.5s steps(40, end); }
- @keyframes typingStatus { from { max-width: 0; opacity: 0; } to { max-width: 100%; opacity: 1; } }
-
- .data-card:hover .data-meta { animation: metaGlitch 0.2s linear infinite; }
- @keyframes metaGlitch {
- 0% { opacity: 1; transform: translate(0); color: var(--cyber-red); }
- 20% { opacity: 0.8; transform: translate(-2px, 1px); color: #0ff; }
- 40% { opacity: 1; transform: translate(2px, -1px); color: var(--cyber-red); }
- 60% { opacity: 0.9; transform: translate(-1px, 2px); color: #fff; }
- 80% { opacity: 1; transform: translate(1px, -2px); color: var(--cyber-red); }
- 100% { opacity: 1; transform: translate(0); color: var(--cyber-red); }
- }
-
- /* ================= LAYOUT & HUD CORNERS ================= */
- .hero-content-wrapper { display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 40px; }
- .hero-text-side { flex: 1; }
- .hero-banner-side { flex: 0 1 auto; display: flex; justify-content: flex-end; }
-
- .banner-frame.hud-corners { position: relative; display: inline-block; padding: 15px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
- .banner-frame.hud-corners img {
- display: block; max-width: 720px; width: 100%; height: auto; border: 1px solid var(--cyber-red-dim);
- filter: grayscale(40%) contrast(1.2); transition: 0.4s ease;
- }
- .banner-frame.hud-corners:hover { transform: translateY(-10px) scale(1.02); }
- .banner-frame.hud-corners:hover img { filter: grayscale(0%) contrast(1.1); border-color: var(--cyber-red); box-shadow: 0 10px 30px rgba(255, 0, 60, 0.2); }
-
- .banner-frame.hud-corners::before, .banner-frame.hud-corners::after, .banner-frame.hud-corners .corners-inner::before, .banner-frame.hud-corners .corners-inner::after {
- content: ''; position: absolute; width: 25px; height: 25px; border: 2px solid var(--cyber-red); transition: 0.3s;
- }
- .banner-frame.hud-corners::before { top: 0; left: 0; border-right: none; border-bottom: none; }
- .banner-frame.hud-corners::after { top: 0; right: 0; border-left: none; border-bottom: none; }
- .banner-frame.hud-corners .corners-inner::before { bottom: 0; left: 0; border-right: none; border-top: none; }
- .banner-frame.hud-corners .corners-inner::after { bottom: 0; right: 0; border-left: none; border-top: none; }
- .banner-frame.hud-corners:hover::before { top: -5px; left: -5px; border-color: #fff; }
- .banner-frame.hud-corners:hover::after { top: -5px; right: -5px; border-color: #fff; }
- .banner-frame.hud-corners:hover .corners-inner::before { bottom: -5px; left: -5px; border-color: #fff; }
- .banner-frame.hud-corners:hover .corners-inner::after { bottom: -5px; right: -5px; border-color: #fff; }
-
- /* ================= RESPONSIVE ================= */
- @media (max-width: 1200px) {
-     .music-grid { grid-template-columns: repeat(2, 1fr); }
-     .log-grid { column-count: 2; }
-     .about-grid { grid-template-columns: 1fr; }
-     .coord-item { flex-direction: column; align-items: flex-start; gap: 15px; }
-     .c-date { width: auto; }
-     .cyber-btn { align-self: flex-start; }
- }
-
- @media (max-width: 768px) {
-     nav { padding: 15px 5%; flex-direction: column; gap: 15px; }
-     .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
-     .section-wrapper { padding: 80px 5% 40px; }
-     .hero-title { font-size: 2.2rem; }
-     .sys-header { font-size: 1.5rem; display: block; max-width: 100%; }
-     .sys-status { flex-wrap: wrap; line-height: 1.4; letter-spacing: 1px; font-size: 0.8rem;}
-     .terminal-box { padding: 20px 15px; }
-     .terminal-box::before { font-size: 1rem; top: -8px; left: 10px; max-width: 90%; }
-     .music-grid { grid-template-columns: 1fr; }
-     .log-grid { column-count: 1; }
-     .sys-end { flex-direction: column; text-align: center; justify-content: center; }
-     .chat-container { height: 450px; }
-     #chatBox { height: 300px !important; overflow-y: auto !important; } 
- }
- 
- 
- #hero { height: auto; min-height: 100vh; padding-top: 120px; padding-bottom: 50px; }
- .hero-content-wrapper { flex-direction: column; text-align: center; gap: 50px; }
- .hero-text-side { display: flex; flex-direction: column; align-items: center; }
- .sys-status { justify-content: center; }
- .hero-banner-side { width: 100%; justify-content: center; }
- /* ================= ขยายกรอบแชทให้กว้างและยาวลงข้างล่าง ================= */
-     #chat.section-wrapper { padding-left: 3%; padding-right: 3%; }
-     .chat-container { 
-         padding: 15px 10px !important; 
-         height: 650px !important; /* เพิ่มความสูงรวมของกล่องแชทให้ยาวลงมา */
-     }
-     #chatBox { 
-         height: 450px !important; /* เพิ่มพื้นที่แสดงข้อความให้ยาวขึ้น */
-         overflow-y: auto !important; 
-     } 
-
- 
- </style>
+ <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="main-container">
-
  <nav>
  <div class="logo">
  <a href="index.html"><img src="assets/main_logo.png" alt="ProMaxz Logo"></a>
@@ -452,7 +29,7 @@ html, body {
  <div class="hero-text-side">
  <div class="sys-status">สร้างการเชื่อมต่อแล้ว // ระบบพร้อมใช้งาน</div>
  <h1 class="hero-title" style="line-height: 1.3;">โลกใบใหม่<br><span class="text-red">PROMAXZ</span><br>เริ่มต้นขึ้น
-</h1>
+ </h1>
  <p class="hero-desc">กำลังออนไลน์</p>
  <div style="display: flex; gap: 15px; flex-wrap: wrap;">
  <a href="#music" class="cyber-btn">ฟังเพลง</a>
@@ -462,13 +39,12 @@ html, body {
  <div class="hero-banner-side">
  <div class="banner-frame hud-corners">
  <div class="corners-inner">
- <img src="assets/slideshow-1.jpg" alt="Hero Banner" style="cursor: pointer;" onclick="openModal(this.src)">
+ <img src="assets/slideshow-1.jpg" alt="Hero Banner" class="hero-banner-image" data-image="assets/slideshow-1.jpg">
  </div>
  </div>
  </div>
  </div>
  </header>
-
  <section id="about" class="section-wrapper">
  <h2 class="sys-header">ProMaxz</h2>
  <div class="about-grid">
@@ -476,8 +52,7 @@ html, body {
  <p class="terminal-text">
  > กำลังเรียกใช้งานการสแกน ...<br>
  > ตำแหน่งที่ค้นพบ: <strong>PRODUCER</strong><br><br>
- โปรดิวเซอร์และมือเบสผู้หลงใหลในดนตรีทุกแนวเพลง เขาเริ่มต้นเส้นทางดนตรีจากการสร้างสรรค์ผลงานในห้องนอน สู่การร่วมงานกับศิลปินมากมาย ทำให้ผลงานของเขามีพลังและน่าจดจำ <span class="highlight">ด้วยซาวด์เบสที่เป็นเอกลักษณ์และการเรียบเรียงดนตรีที่หนักแน่น</span>
- ทำให้ผลงานของเขามีพลังและน่าจดจำ และพร้อมที่จะก้าวเข้าสู่การปฏิวัติทางเสียง<br><br>
+ โปรดิวเซอร์และมือเบสผู้หลงใหลในดนตรีทุกแนวเพลง เขาเริ่มต้นเส้นทางดนตรีจากการสร้างสรรค์ผลงานในห้องนอน สู่การร่วมงานกับศิลปินมากมาย ทำให้ผลงานของเขามีพลังและน่าจดจำ ด้วยซาวด์เบสที่เป็นเอกลักษณ์และการเรียบเรียงดนตรีที่หนักแน่น ทำให้ผลงานของเขามีพลังและน่าจดจำ และพร้อมที่จะก้าวเข้าสู่การปฏิวัติทางเสียง<br><br>
  > สถานะ: <span class="highlight">พร้อมส่งมอบระบบ</span>
  </p>
  </div>
@@ -486,7 +61,7 @@ html, body {
  </div>
  </div>
  </section>
-
+ 
  <section id="about2" class="section-wrapper">
  <h2 class="sys-header">SKYLER</h2>
  <div class="about-grid">
@@ -504,11 +79,11 @@ html, body {
  </div>
  </div>
  </section>
-
+ 
  <section id="music" class="section-wrapper">
  <h2 class="sys-header">ฟังเพลง</h2>
  <div class="music-grid">
- 
+  
  <div class="data-card">
  <div class="data-img-wrap">
  <img src="assets/single8.png" alt="Track 08">
@@ -521,7 +96,7 @@ html, body {
  <div class="data-meta">December 2025</div>
  </div>
  </div>
-
+ 
  <div class="data-card">
  <div class="data-img-wrap">
  <img src="assets/single7.jpg" alt="Track 07">
@@ -534,7 +109,7 @@ html, body {
  <div class="data-meta">October 2025</div>
  </div>
  </div>
-
+ 
  <div class="data-card">
  <div class="data-img-wrap">
  <img src="assets/single6.png" alt="Track 06">
@@ -547,7 +122,7 @@ html, body {
  <div class="data-meta">September 2025</div>
  </div>
  </div>
-
+ 
  <div class="data-card">
  <div class="data-img-wrap">
  <img src="assets/single5.png" alt="Track 05">
@@ -560,7 +135,7 @@ html, body {
  <div class="data-meta">August 2025</div>
  </div>
  </div>
-
+ 
  <div class="data-card">
  <div class="data-img-wrap">
  <img src="assets/single-4.jpg" alt="Track 04">
@@ -573,7 +148,7 @@ html, body {
  <div class="data-meta">June 2025</div>
  </div>
  </div>
-
+ 
  <div class="data-card">
  <div class="data-img-wrap">
  <img src="assets/single3.jpg" alt="Track 03">
@@ -586,7 +161,7 @@ html, body {
  <div class="data-meta">May 2025</div>
  </div>
  </div>
-
+ 
  <div class="data-card">
  <div class="data-img-wrap">
  <img src="assets/single2.jpg" alt="Track 02">
@@ -599,7 +174,7 @@ html, body {
  <div class="data-meta">May 2025</div>
  </div>
  </div>
-
+ 
  <div class="data-card">
  <div class="data-img-wrap">
  <img src="assets/single1.jpg" alt="Track 01">
@@ -612,10 +187,10 @@ html, body {
  <div class="data-meta">Apr 2025</div>
  </div>
  </div>
-
+ 
  </div>
  </section>
-
+ 
  <section id="events" class="section-wrapper">
     <h2 class="sys-header">ตารางทัวร์</h2>
     <div class="coord-list" id="event-container">
@@ -624,39 +199,35 @@ html, body {
         </div>
     </div>
  </section>
-
+ 
  <section id="news" class="section-wrapper">
     <h2 class="sys-header">ข่าวสาร</h2>
     <div class="log-grid" id="news-container">
         <div style="color: var(--cyber-red); font-family: monospace;">> กำลังโหลดข่าว กรุณารอสักครู่...</div>
     </div>
-</section>
-
+ </section>
+ 
  <section id="chat" class="section-wrapper">
  <h2 class="sys-header">ห้องแชท</h2>
  <div class="chat-container" style="padding: 20px;">
- <!-- ส่วนพิมพ์ข้อความ -->
- <div class="input-area" style="border-bottom: 2px solid #FF003C; padding-bottom: 20px; margin-bottom: 20px;">
- 
- <!-- ช่องใส่รหัสสำหรับ Admin (เอากลับมาแล้ว) -->
+ <div class="input-area">
  <div id="adminPanel" style="display:none; margin-bottom:10px;">
-    <input type="password" id="adminPass" placeholder="ENTER_ACCESS_CODE" style="width:100%; background:#000; border:1px solid #FF003C; color:#FF003C; padding:8px; font-family: 'Prompt', sans-serif;">
+    <input type="password" id="adminPass" class="field-input" placeholder="ENTER_ACCESS_CODE" style="color: var(--cyber-red);">
  </div>
  
- <input type="text" id="chatName" placeholder="NAME" style="width:100%; background:#000; border:1px solid #FF003C; color:#fff; padding:8px; margin-bottom:10px; font-family: 'Prompt', sans-serif;">
- <textarea id="chatMsg" placeholder="MESSAGE" style="width:100%; height:100px; background:#000; border:1px solid #FF003C; color:#fff; padding:10px; resize:none; box-sizing:border-box; outline:none; font-family: 'Prompt', sans-serif;"></textarea>
+ <input type="text" id="chatName" class="field-input" placeholder="NAME">
+ <textarea id="chatMsg" class="field-textarea" placeholder="MESSAGE"></textarea>
  
- <button id="postBtn" onclick="postMsg()" class="cyber-btn" style="margin-top:10px;">POST</button>
- <p style="font-size: 0.7rem; color: #666; margin-top: 5px; font-family: 'Prompt', sans-serif;">*หลังจากกดปุ่ม POST แล้วรอสักครู่ ระบบจะอัปเดตข้อความจาก Cloudflare</p>
+ <button id="postBtn" class="cyber-btn" style="margin-top:10px;">POST</button>
+ <p class="form-note">*หลังจากกดปุ่ม POST แล้วรอสักครู่ ระบบจะอัปเดตข้อความจาก Cloudflare</p>
  </div>
-
- <!-- ส่วนแสดงผลข้อความ -->
- <div id="chatBox" style="padding:15px; overflow-y:visible; height:auto; font-family:'Prompt', sans-serif; color:#fff;">
+ 
+ <div id="chatBox" class="chat-message-box">
  > กำลังแสดงผล กรุณารอสักครู่...
  </div>
  </div>
  </section>
-
+ 
  <footer>
  <div class="f-logo-center">
  <img src="assets/main_logo.png" alt="ProMaxz Logo">
@@ -667,193 +238,11 @@ html, body {
  <a href="#hero" class="back-top">[ ^ กลับไปด้านบน ]</a>
  </div>
  </footer>
-
+ 
 </div>
-<!-- Lightbox Modal สำหรับขยายภาพ (คลิกพื้นที่ว่างเพื่อปิด) -->
-<div id="imageModal" onclick="closeModal()" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; backdrop-filter: blur(5px); cursor:pointer;">
-    <!-- ใส่ onclick="event.stopPropagation()" เพื่อป้องกันไม่ให้คลิกโดนรูปแล้วรูปปิดตาม -->
-    <img id="modalImg" onclick="event.stopPropagation()" style="max-width:90%; max-height:85vh; border:2px solid var(--cyber-red); box-shadow:0 0 30px var(--cyber-red); cursor:default;">
+<div id="imageModal" class="modal-backdrop">
+    <img id="modalImg" class="modal-image" alt="Expanded view">
 </div>
-<script>
-    const API_URL = '/api'; 
-
-    // ==========================================
-    // ส่วนที่ 1: ระบบตารางทัวร์ (EVENTS)
-    // ==========================================
-    async function loadTour() {
-        const container = document.getElementById('event-container');
-        try {
-            const res = await fetch(API_URL + '/events');
-            const data = await res.json();
-            
-            if(data && data.length > 0) {
-                container.innerHTML = data.map(event => {
-                    // เช็คว่าลิงก์มีค่าไหม และไม่ใช่เครื่องหมาย - หรือเว้นว่าง
-                    let isValidLink = event.link && event.link.trim() !== '' && event.link.trim() !== '-';
-                    
-                    // ถ้าลิงก์จริงให้โชว์ปุ่ม ACCESS ถ้าไม่มีให้โชว์ปุ่มเทาๆ กดไม่ได้
-                    let linkBtn = isValidLink 
-                        ? `<a href="${event.link}" target="_blank" class="cyber-btn">ACCESS</a>`
-                        : `<button class="cyber-btn" disabled style="opacity: 0.3; cursor: not-allowed; border: 1px solid var(--cyber-red-dim); background: transparent; color: #888;">UNAVAILABLE</button>`;
-
-                    return `
-                    <div class="coord-item">
-                        <div class="c-date">${event.date}</div>
-                        <div class="c-details">
-                            <h3 class="c-title">${event.title}</h3>
-                            <div class="c-loc">${event.location}</div>
-                        </div>
-                        <div style="display:flex; align-items:center;">
-                            ${linkBtn}
-                        </div>
-                    </div>
-                    `;
-                }).join('');
-            } else {
-                container.innerHTML = '<div class="coord-item">ERROR: NO TARGETS FOUND</div>';
-            }
-        } catch(e) { 
-            container.innerHTML = '<div class="coord-item">ERROR: SYSTEM OFFLINE</div>'; 
-        }
-    }
-
-    // ==========================================
-    // ส่วนที่ 2: ระบบดึงข้อมูลข่าว (NEWS)
-    // ==========================================
-    async function loadNews() {
-        const container = document.getElementById('news-container');
-        try {
-            const res = await fetch(API_URL + '/news');
-            const data = await res.json();
-            
-            if(data && data.length > 0) {
-                container.innerHTML = data.slice(0, 6).map(news => {
-                    // เช็คลิงก์ของหน้าข่าว (ถ้าคุณเพิ่มระบบใส่ลิงก์เข้ามาแล้ว)
-                    let isValidLink = news.link && news.link.trim() !== '' && news.link.trim() !== '-';
-                    
-                    // สลับ Tag ถ้ามีลิงก์ให้เป็น <a> ถาไม่มีให้เป็น <div> ธรรมดา
-                    let tag = isValidLink ? 'a' : 'div';
-                    let hrefAttr = isValidLink ? `href="${news.link}"` : '';
-                    let cursorStyle = isValidLink ? 'cursor: pointer;' : 'cursor: default;';
-                    let readMoreText = isValidLink ? `<span style="color: var(--cyber-red); font-size: 0.85rem; font-weight: bold; margin-top: 15px; display: block;">[ READ MORE >> ]</span>` : '';
-
-                    return `
-                    <div style="display: flex; flex-direction: column;">
-                        <${tag} ${hrefAttr} class="log-card" style="text-decoration: none; ${cursorStyle}">
-                            <img src="${news.img_url}" class="log-img" alt="News Image" onerror="this.src='assets/main_logo.png'">
-                            <span class="log-id">LOG_ID: ${news.log_id}</span>
-                            <h3 class="log-title">${news.title}</h3>
-                            <p class="log-desc">${news.description}</p>
-                            ${readMoreText}
-                        </${tag}>
-                    </div>
-                    `;
-                }).join('');
-            } else {
-                container.innerHTML = '<div style="color:#888; font-family: monospace;">> NO LOGS FOUND.</div>';
-            }
-        } catch(e) { 
-            container.innerHTML = '<div style="color:var(--cyber-red); font-family: monospace;">> ERROR: DATABANK OFFLINE</div>'; 
-        }
-    }
-
-    // ==========================================
-    // ส่วนที่ 3: ระบบแชท (NEXUS_COMM)
-    // ==========================================
-    async function loadMessages() {
-        try {
-            const res = await fetch(API_URL + '/chat');
-            const data = await res.json();
-            
-            document.getElementById('chatBox').innerHTML = data.map(r => {
-                const date = new Date(r.timestamp);
-                const dateStr = date.toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: '2-digit' });
-                const timeStr = date.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-                
-                return `
-                <div style="margin-bottom:10px; font-size: 0.9rem;">
-                    <span style="color:#888; font-family: monospace; font-size: 0.75rem;">[${dateStr} ${timeStr}]</span>
-                    <span style="color:#FF003C; font-weight:bold;">${r.name}:</span> 
-                    <span>${r.message}</span>
-                </div>
-                `;
-            }).join('');
-        } catch(e) {}
-    }
-
-    async function postMsg() {
-        const nameInput = document.getElementById('chatName');
-        const msgInput = document.getElementById('chatMsg');
-        const adminPassInput = document.getElementById('adminPass'); 
-        const adminPanel = document.getElementById('adminPanel'); 
-        const postBtn = document.getElementById('postBtn');
-
-        const name = nameInput.value.trim();
-        const msg = msgInput.value.trim();
-        const pass = adminPassInput ? adminPassInput.value.trim() : ""; 
-
-        if(!name || !msg) return alert("> ERROR: FIELDS_REQUIRED");
-
-        if (name.toUpperCase() === "PROMAXZ" || name.toUpperCase() === "ADMIN") {
-            if (adminPanel && adminPanel.style.display === 'none') {
-                adminPanel.style.display = 'block';
-                return alert("กรุณาระบุรหัสยืนยันตัวตน " + name);
-            }
-            if (!pass) {
-                return alert("กรุณาใส่รหัสผ่านก่อนโพสต์ครับ");
-            }
-        }
-
-        postBtn.innerText = "UPLOADING...";
-        postBtn.disabled = true;
-
-        try {
-            const response = await fetch(API_URL + '/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: name, message: msg, adminPass: pass }) 
-            });
-            const result = await response.json();
-            
-            if (result.error) {
-                alert("ACCESS DENIED: " + result.error);
-            } else {
-                msgInput.value = ''; 
-                if(adminPassInput) adminPassInput.value = ''; 
-                if(adminPanel) adminPanel.style.display = 'none'; 
-            }
-        } catch (error) {
-            alert("> ERROR: SYSTEM_ERROR");
-        }
-        
-        postBtn.innerText = "POST";
-        postBtn.disabled = false;
-        loadMessages(); 
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        loadTour();
-        loadNews();
-        loadMessages();
-        setInterval(loadMessages, 5000);
-    });
-    // เปิด Modal แสดงรูปใหญ่
-    function openModal(imgSrc) {
-        const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImg');
-        modal.style.display = 'flex';
-        modalImg.src = imgSrc;
-    }
-
-    // ปิด Modal
-    function closeModal() {
-        document.getElementById('imageModal').style.display = 'none';
-    }
-
-    // กดปุ่ม Esc บนคีย์บอร์ดเพื่อปิดภาพได้ด้วย
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
-    });
-</script>
+<script src="app.js" defer></script>
 </body>
 </html>

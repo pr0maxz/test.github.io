@@ -1,54 +1,85 @@
+const ADMIN_PASS_FALLBACK = '@dm1n';
+
+function getValidAdminPass(context) {
+    return context.env.ADMIN_PASS || ADMIN_PASS_FALLBACK;
+}
+
 export async function onRequestGet(context) {
     try {
         const { results } = await context.env.DB.prepare(
-            "SELECT * FROM messages ORDER BY timestamp DESC LIMIT 50"
+            'SELECT * FROM messages ORDER BY timestamp DESC LIMIT 50'
         ).all();
-        return new Response(JSON.stringify(results), { headers: { "Content-Type": "application/json" } });
+
+        return new Response(JSON.stringify(results), {
+            headers: { 'Content-Type': 'application/json' }
+        });
     } catch (err) {
-        return new Response(JSON.stringify({ error: "System Offline" }), { status: 500 });
+        return new Response(JSON.stringify({ error: 'System Offline' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 }
 
 export async function onRequestPost(context) {
     try {
-        const body = await context.request.json();
-        const { name, message, adminPass } = body;
+        const body = await context.request.json().catch(() => ({}));
+        const name = typeof body.name === 'string' ? body.name.trim() : '';
+        const message = typeof body.message === 'string' ? body.message.trim() : '';
+        const adminPass = body.adminPass;
 
-        // เช็ครหัสผ่านตอนพิมพ์แชทในชื่อ PROMAXZ
-        if (name.toUpperCase() === "PROMAXZ" && adminPass !== "@dm1n") { 
-            return new Response(JSON.stringify({ error: "DENIED: รหัสผ่านไม่ถูกต้อง" }), { status: 403 });
+        if (name.toUpperCase() === 'PROMAXZ' && adminPass !== getValidAdminPass(context)) {
+            return new Response(JSON.stringify({ error: 'DENIED: รหัสผ่านไม่ถูกต้อง' }), {
+                status: 403,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
-        const stmt = context.env.DB.prepare(
-            "INSERT INTO messages (name, message, timestamp) VALUES (?, ?, ?)"
-        ).bind(name, message, new Date().toISOString());
-        
-        await stmt.run();
+        if (!name || !message) {
+            return new Response(JSON.stringify({ error: 'DENIED: ข้อมูลไม่ครบ' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
 
-        return new Response(JSON.stringify({ success: true }), { status: 200 });
+        await context.env.DB.prepare(
+            'INSERT INTO messages (name, message, timestamp) VALUES (?, ?, ?)'
+        ).bind(name, message, new Date().toISOString()).run();
+
+        return new Response(JSON.stringify({ success: true }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+        });
     } catch (err) {
-        return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+        return new Response(JSON.stringify({ error: err.message }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 }
 
-// --------------------------------------------------
-// ส่วนที่เพิ่มใหม่: ระบบรับคำสั่งลบข้อความ (DELETE)
-// --------------------------------------------------
 export async function onRequestDelete(context) {
     try {
-        const body = await context.request.json();
+        const body = await context.request.json().catch(() => ({}));
         const { id, adminPass } = body;
 
-        // เช็ครหัสผ่านแอดมินก่อนอนุญาตให้ลบ (เปลี่ยน "1234" เป็นรหัสของคุณ)
-        if (adminPass !== "@dm1n") { 
-            return new Response(JSON.stringify({ error: "DENIED: รหัสผ่านแอดมินลับไม่ถูกต้อง" }), { status: 403 });
+        if (adminPass !== getValidAdminPass(context)) {
+            return new Response(JSON.stringify({ error: 'DENIED: รหัสผ่านแอดมินลับไม่ถูกต้อง' }), {
+                status: 403,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
-        const stmt = context.env.DB.prepare("DELETE FROM messages WHERE id = ?").bind(id);
-        await stmt.run();
+        await context.env.DB.prepare('DELETE FROM messages WHERE id = ?').bind(id).run();
 
-        return new Response(JSON.stringify({ success: true }), { status: 200 });
+        return new Response(JSON.stringify({ success: true }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+        });
     } catch (err) {
-        return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+        return new Response(JSON.stringify({ error: err.message }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 }
